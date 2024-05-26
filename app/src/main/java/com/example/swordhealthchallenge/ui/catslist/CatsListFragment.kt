@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.databinding.FragmentCatsListBinding
+import javax.inject.Inject
 
 class CatsListFragment : Fragment() {
 
@@ -20,28 +21,30 @@ class CatsListFragment : Fragment() {
     private val binding get() = _binding!!
     private val catsListAdapter = CatsListAdapter(emptyList())
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: CatsListViewModel by viewModels { viewModelFactory }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val catsListViewModel = ViewModelProvider(this).get(CatsListViewModel::class.java)
-
         _binding = FragmentCatsListBinding.inflate(inflater, container, false)
-
-        /*val textView: TextView = binding.textHome
-        catsListViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }*/
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity?.application as MainApplication).appComponent.inject(this)
 
         binding.catListRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 3)
             adapter = catsListAdapter
+        }
+
+        viewModel.catsList.observe(viewLifecycleOwner) { catsList ->
+            catsListAdapter.updateCatsList(catsList)
         }
     }
 

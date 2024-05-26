@@ -8,7 +8,7 @@ import com.example.swordhealthchallenge.databinding.CatListItemBinding
 import com.example.swordhealthchallenge.domain.Cat
 
 class CatsListAdapter(
-    private val catsList: List<Cat>
+    private var catsList: List<Cat>
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
@@ -21,10 +21,15 @@ class CatsListAdapter(
 
     override fun onBindViewHolder(holder: CatsListViewHolder, position: Int) {
         holder.bind(catsList[position])
-
     }
 
     override fun getItemCount(): Int = catsList.size
+
+    fun updateCatsList(cats: List<Cat>) {
+        catsList = cats
+        notifyDataSetChanged()
+    }
+
 
     class CatsListViewHolder(
         private val binding: CatListItemBinding
@@ -33,9 +38,7 @@ class CatsListAdapter(
         fun bind(cat: Cat) {
             with(binding) {
                 catBreedTextView.text = cat.breed
-                Glide.with(root.context)
-                    .load(cat.imageUrl)
-                    .into(catImageView)
+                Glide.with(root.context).load(cat.imageUrl).into(catImageView)
             }
         }
     }
