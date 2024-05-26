@@ -1,5 +1,7 @@
 [versions]
 agp = "8.4.1"
+glide = "4.16.0"
+glidecompiler = "4.11.0"
 converterGson = "2.9.0"
 daggerCompiler = "2.51"
 kotlin = "2.0.0"
@@ -27,6 +29,8 @@ dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "d
 dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "daggerCompiler" }
 dagger-android-support = { module = "com.google.dagger:dagger-android-support", version.ref = "daggerCompiler" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerCompiler" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glidecompiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

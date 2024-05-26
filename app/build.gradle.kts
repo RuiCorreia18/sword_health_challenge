@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.dagger.android)
     implementation(libs.dagger.android.support)
 
+    //Glide
+    ksp(libs.glide.compiler)
+    implementation(libs.glide)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
