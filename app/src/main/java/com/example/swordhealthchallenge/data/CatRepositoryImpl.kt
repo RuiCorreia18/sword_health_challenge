@@ -16,8 +16,9 @@ class CatRepositoryImpl @Inject constructor(
             }
     }
 
-    //TODO replace for real dataSource
     override fun getCatImage(imageId: String): Single<String> {
-        return Single.just("")
+        return remoteDataSource.getCatImage(imageId).map {
+            it.url
+        }
     }
 }

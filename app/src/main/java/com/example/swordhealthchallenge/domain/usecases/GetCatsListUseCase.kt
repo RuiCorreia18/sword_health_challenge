@@ -8,5 +8,6 @@ import javax.inject.Inject
 class GetCatListUseCase @Inject constructor(
     private val repository: CatRepository
 ) {
-    fun execute(): Single<List<Cat>> = repository.getCatList()
+    fun getCatList(): Single<List<Cat>> = repository.getCatList()
+    fun getCatImage(imageId: String): Single<String> = repository.getCatImage(imageId)
 }

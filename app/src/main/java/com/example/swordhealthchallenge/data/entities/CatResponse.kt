@@ -10,3 +10,10 @@ data class CatResponse(
     @SerializedName("reference_image_id")
     val reference_image_id: String,
 )
+
+data class CatImageResponse(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("url")
+    val url: String
+)
