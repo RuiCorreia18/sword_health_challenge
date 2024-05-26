@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.ui.cats_list
+package com.example.swordhealthchallenge.ui.catslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
