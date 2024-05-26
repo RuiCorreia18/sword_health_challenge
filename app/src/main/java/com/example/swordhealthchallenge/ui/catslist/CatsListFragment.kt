@@ -46,6 +46,8 @@ class CatsListFragment : Fragment() {
         viewModel.catsList.observe(viewLifecycleOwner) { catsList ->
             catsListAdapter.updateCatsList(catsList)
         }
+
+        viewModel.getCatList()
     }
 
     override fun onDestroyView() {
