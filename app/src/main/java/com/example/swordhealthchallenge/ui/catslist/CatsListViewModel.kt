@@ -80,21 +80,6 @@ class CatsListViewModel @Inject constructor(
             .addTo(compositeDisposable)
     }
 
-    fun favouriteCat(imageId: String){
-        postFavouriteCatUseCase.postFavouriteCat(imageId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onComplete = {
-                    val tempCatList = catsList.value!!
-                    tempCatList.find { cat -> cat.imageId == imageId }?.favourite = true
-                    _catsList.value = tempCatList
-
-                }
-            )
-            .addTo(compositeDisposable)
-    }
-
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()

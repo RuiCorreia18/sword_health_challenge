@@ -52,7 +52,7 @@ class FavouritesViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { favouriteCats ->
-                    _favouriteCatsList.value = favouriteCats
+                    _favouriteCatsList.value = favouriteCats.sortedBy { it.breed }
                 },
                 onError = { error ->
                     Log.e("ERROR CAT API FAV", error.toString())
