@@ -5,4 +5,5 @@ import io.reactivex.rxjava3.core.Single
 
 interface CatRepository {
     fun getCatList(): Single<List<Cat>>
+    fun searchCat(search: String): Single<List<Cat>>
 }

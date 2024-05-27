@@ -15,4 +15,10 @@ class CatRepositoryImpl @Inject constructor(
                 res.toDomainList()
             }
     }
+
+    override fun searchCat(search: String): Single<List<Cat>> {
+        return remoteDataSource.searchCat(search)
+            .map { res ->
+                res.toDomainList() }
+    }
 }

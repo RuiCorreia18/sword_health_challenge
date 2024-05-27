@@ -14,4 +14,9 @@ interface CatApi {
     fun getCatList(
         @Query("limit") limit: String = "20",
     ): Single<List<CatResponse>>
+
+
+    @Headers("x-api-key: ${BuildConfig.API_KEY}")
+    @GET("breeds/search")
+    fun searchCat(@Query("q") search: String): Single<List<CatResponse>>
 }

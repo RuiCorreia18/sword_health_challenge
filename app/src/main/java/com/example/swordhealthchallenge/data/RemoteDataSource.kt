@@ -7,7 +7,8 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val catApi: CatApi
 ) {
-//page
+    //page
     fun getCatList(): Single<List<CatResponse>> = catApi.getCatList()
+    fun searchCat(search: String): Single<List<CatResponse>> = catApi.searchCat(search)
 
 }

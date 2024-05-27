@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:id="@+id/searchBar"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search Cats"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

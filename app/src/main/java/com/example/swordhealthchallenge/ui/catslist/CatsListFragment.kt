@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +48,25 @@ class CatsListFragment : Fragment() {
             catsListAdapter.updateCatsList(catsList)
         }
 
+        hookSearchListener()
+
         viewModel.getCatList()
+    }
+
+    private fun hookSearchListener(){
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    viewModel.searchCats(query)
+                    return true
+                } else {
+
+                    return false
+                }
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean = false
+        })
     }
 
     override fun onDestroyView() {
