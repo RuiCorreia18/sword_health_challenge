@@ -5,5 +5,4 @@ import io.reactivex.rxjava3.core.Single
 
 interface CatRepository {
     fun getCatList(): Single<List<Cat>>
-    fun getCatImage(imageId: String): Single<String>
 }

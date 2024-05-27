@@ -17,37 +17,22 @@ import javax.inject.Inject
 class CatsListViewModel @Inject constructor(
     private val getCatListUseCase: GetCatListUseCase
 ) : ViewModel() {
-    private val _catsList = MutableLiveData<List<Cat>>()
+    private val _catsList = MutableLiveData<List<Cat>>(emptyList())
     val catsList: LiveData<List<Cat>>
         get() = _catsList
 
     @SuppressLint("CheckResult")
     fun getCatList() {
-        val tempList = mutableListOf<Cat>()
-        catsList.value?.let { tempList.addAll(it) }
-
-        //TODO check if better way to do this
         getCatListUseCase.getCatList()
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { catList ->
-                    catList.forEach { cat ->
-                        getCatListUseCase.getCatImage(cat.imageUrl)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeBy(
-                                onSuccess = {
-                                    cat.imageUrl = it
-                                    tempList.add(cat)
-                                    if(catList.last() == cat){
-                                        _catsList.value = tempList
-                                    }
-                                },
-                                onError = {
-                                    Log.e("ERROR CAT API IMAGE", it.toString())
-                                }
-                            )
-                    }
+
+                    //TODO Added this in case i got time for pagination
+                    val newCatList = catsList.value!!.plus(catList)
+                    _catsList.value = newCatList
+
                 },
                 onError = {
                     Log.e("ERROR CAT API BREED", it.toString())
@@ -57,15 +42,4 @@ class CatsListViewModel @Inject constructor(
 
 
     }
-
-    /*@SuppressLint("CheckResult")
-    private fun getCatImage(imageId: String): String {
-        return getCatListUseCase.getCatImage(imageId)
-            .subscribeOn(Schedulers.io())
-            .subscribeBy(
-                onSuccess={
-                    it
-                }
-            )
-    }*/
 }

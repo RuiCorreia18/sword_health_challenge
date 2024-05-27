@@ -9,5 +9,4 @@ class GetCatListUseCase @Inject constructor(
     private val repository: CatRepository
 ) {
     fun getCatList(): Single<List<Cat>> = repository.getCatList()
-    fun getCatImage(imageId: String): Single<String> = repository.getCatImage(imageId)
 }

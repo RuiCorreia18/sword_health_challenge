@@ -15,10 +15,4 @@ class CatRepositoryImpl @Inject constructor(
                 res.toDomainList()
             }
     }
-
-    override fun getCatImage(imageId: String): Single<String> {
-        return remoteDataSource.getCatImage(imageId).map {
-            it.url
-        }
-    }
 }

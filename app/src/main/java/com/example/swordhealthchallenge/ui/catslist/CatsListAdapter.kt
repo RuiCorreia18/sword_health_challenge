@@ -1,5 +1,7 @@
 package com.example.swordhealthchallenge.ui.catslist
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +41,16 @@ class CatsListAdapter(
             with(binding) {
                 catBreedTextView.text = cat.breed
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
+                catItem.setOnClickListener {
+                    Log.e("CLICK CAT CARD", cat.id)
+                    //TODO Open Details Page
+                }
+
+                catFavouriteImageView.setOnClickListener {
+                    Log.e("CLICK FAV CAT CARD", cat.id)
+                    catFavouriteImageView.setColorFilter(Color.GREEN)
+                    //TODO postFavourite
+                }
             }
         }
     }

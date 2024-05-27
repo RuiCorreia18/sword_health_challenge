@@ -7,8 +7,8 @@ data class CatResponse(
     val id: String,
     @SerializedName("name")
     val name: String,
-    @SerializedName("reference_image_id")
-    val reference_image_id: String,
+    @SerializedName("image")
+    val image: CatImageResponse,
 )
 
 data class CatImageResponse(

@@ -8,7 +8,8 @@ fun List<CatResponse>.toDomainList(): List<Cat> {
         Cat(
             id = it.id,
             breed = it.name,
-            imageUrl = it.reference_image_id ?: ""
+            imageUrl = it.image.url ?: "",
+            imageId = it.image.id ?: "",
         )
     }
 }
