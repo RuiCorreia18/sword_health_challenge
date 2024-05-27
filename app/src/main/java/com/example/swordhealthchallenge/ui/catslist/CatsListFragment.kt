@@ -1,5 +1,6 @@
 package com.example.swordhealthchallenge.ui.catslist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.databinding.FragmentCatsListBinding
+import com.example.swordhealthchallenge.ui.details.DetailsActivity
 import javax.inject.Inject
 
 class CatsListFragment : Fragment() {
@@ -42,7 +44,8 @@ class CatsListFragment : Fragment() {
 
         catsListAdapter = CatsListAdapter(
             catsList = emptyList(),
-            onFavouriteClick = { viewModel.favouriteCat(it) }
+            onFavouriteClick = { viewModel.favouriteCat(it) },
+            onCardClick = { id, url, fav -> openCatDetails(id, url, fav) }
         )
         binding.catListRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 3)
@@ -76,6 +79,15 @@ class CatsListFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean = false
         })
+    }
+
+    private fun openCatDetails(catId: String, catImageUrl: String, isFavouriteCat: Boolean) {
+        val intent = Intent(this.activity, DetailsActivity::class.java).apply {
+            putExtra("catId",catId)
+            putExtra("catImageUrl",catImageUrl)
+            putExtra("isCatFavourite",isFavouriteCat)
+        }
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

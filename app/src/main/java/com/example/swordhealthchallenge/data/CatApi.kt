@@ -41,7 +41,7 @@ interface CatApi {
     @GET("images/{imageId}")
     fun getCatByImageId(@Path("imageId") imageId: String): Single<CatByImageResponse>
 
-    @GET("images/{imageId}")
-    fun getCatDetails(@Path("imageId") catId: String): Single<CatDetailsResponse>
+    @GET("breeds/{breedsId}")
+    fun getCatDetails(@Path("breedsId") catId: String): Single<CatDetailsResponse>
 
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.swordhealthchallenge.data.CatRepositoryImpl
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.ui.catslist.CatsListViewModel
+import com.example.swordhealthchallenge.ui.details.DetailsViewModel
 import com.example.swordhealthchallenge.ui.favourites.FavouritesViewModel
 import dagger.Binds
 import dagger.Module
@@ -24,6 +25,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavouritesViewModel::class)
     abstract fun bindFavouriteViewModel(viewModel: FavouritesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailsViewModel::class)
+    abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 
     @Binds
     abstract fun bindRepository(repositoryImpl: CatRepositoryImpl): CatRepository

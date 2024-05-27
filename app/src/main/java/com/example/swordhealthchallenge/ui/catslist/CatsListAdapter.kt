@@ -1,7 +1,6 @@
 package com.example.swordhealthchallenge.ui.catslist
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,8 @@ import com.example.swordhealthchallenge.domain.Model.Cat
 
 class CatsListAdapter(
     private var catsList: List<Cat>,
-    private val onFavouriteClick: (String) -> Unit = {}
+    private val onFavouriteClick: (String) -> Unit = {},
+    private val onCardClick:(String,String,Boolean) -> (Unit)
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
@@ -33,7 +33,6 @@ class CatsListAdapter(
         notifyDataSetChanged()
     }
 
-
     inner class CatsListViewHolder(
         private val binding: CatListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -50,12 +49,11 @@ class CatsListAdapter(
             }
 
             binding.catFavouriteImageView.setOnClickListener {
-                onFavouriteClick(cat.imageId)
+                onFavouriteClick.invoke(cat.imageId)
             }
 
-
             binding.catItem.setOnClickListener {
-                Log.e("CLICK CAT CARD", cat.id)
+                onCardClick.invoke(cat.id, cat.imageUrl, cat.favourite)
             }
         }
     }

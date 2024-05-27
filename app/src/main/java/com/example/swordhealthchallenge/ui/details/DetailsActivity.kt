@@ -1,9 +1,11 @@
 package com.example.swordhealthchallenge.ui.details
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.ActivityDetailsBinding
@@ -22,7 +24,7 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
         (this.application as MainApplication).appComponent.inject(this)
 
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
+        binding = ActivityDetailsBinding.bind(findViewById(R.id.activityDetailsLayout))
 
         viewModel.catDetails.observe(this) { catDetails ->
             updateDetails(catDetails)
@@ -38,10 +40,16 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun updateDetails(cat: CatDetails) {
         with(binding) {
+            Glide.with(root.context).load(cat.imageUrl).into(catImageView)
             catBreedTextView.text = cat.breed
             catOriginTextView.text = getString(R.string.cat_origin, cat.origin)
             catTemperamentTextView.text = getString(R.string.cat_temperament, cat.temperament)
             catDescriptionTextView.text = getString(R.string.cat_description, cat.description)
+            if(cat.favourite){
+                catFavouriteImageView.setColorFilter(Color.GREEN)
+            }else{
+                catFavouriteImageView.setColorFilter(Color.BLACK)
+            }
         }
     }
 

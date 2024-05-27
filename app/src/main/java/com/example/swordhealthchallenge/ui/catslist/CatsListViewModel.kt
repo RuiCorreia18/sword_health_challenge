@@ -1,6 +1,7 @@
 package com.example.swordhealthchallenge.ui.catslist
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -78,6 +79,10 @@ class CatsListViewModel @Inject constructor(
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    fun openCatDetails(cat: Cat){
+        val intent = Intent()
     }
 
     override fun onCleared() {
