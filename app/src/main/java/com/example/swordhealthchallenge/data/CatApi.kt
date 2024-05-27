@@ -2,6 +2,7 @@ package com.example.swordhealthchallenge.data
 
 import com.example.swordhealthchallenge.BuildConfig
 import com.example.swordhealthchallenge.data.entities.CatByImageResponse
+import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
 import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
@@ -39,5 +40,8 @@ interface CatApi {
 
     @GET("images/{imageId}")
     fun getCatByImageId(@Path("imageId") imageId: String): Single<CatByImageResponse>
+
+    @GET("images/{imageId}")
+    fun getCatDetails(@Path("imageId") catId: String): Single<CatDetailsResponse>
 
 }

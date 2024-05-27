@@ -1,6 +1,7 @@
 package com.example.swordhealthchallenge.data
 
 import com.example.swordhealthchallenge.data.entities.CatByImageResponse
+import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
 import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
@@ -17,5 +18,6 @@ class RemoteDataSource @Inject constructor(
     fun postFavouriteCat(favouriteCat: FavouriteCatBody): Completable = catApi.postFavouriteCat(favouriteCat)
     fun getFavouriteCats(): Single<List<FavouriteCatResponse>> = catApi.getFavouriteCats()
     fun getCatImage(imageId: String): Single<CatByImageResponse> = catApi.getCatByImageId(imageId)
+    fun getCatDetails(catId: String): Single<CatDetailsResponse> = catApi.getCatDetails(catId)
 
 }

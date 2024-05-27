@@ -3,6 +3,7 @@ package com.example.swordhealthchallenge.data
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.Model.Cat
+import com.example.swordhealthchallenge.domain.Model.CatDetails
 import com.example.swordhealthchallenge.domain.Model.FavouriteCat
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -38,6 +39,13 @@ class CatRepositoryImpl @Inject constructor(
 
     override fun getCatByImageId(imageId: String): Single<FavouriteCat> {
         return remoteDataSource.getCatImage(imageId)
+            .map { res ->
+                res.toDomainModel()
+            }
+    }
+
+    override fun getCatDetails(catId: String): Single<CatDetails> {
+        return remoteDataSource.getCatDetails(catId)
             .map { res ->
                 res.toDomainModel()
             }

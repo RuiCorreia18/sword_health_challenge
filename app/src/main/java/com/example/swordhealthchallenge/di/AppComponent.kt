@@ -3,6 +3,7 @@ package com.example.swordhealthchallenge.di
 import android.content.Context
 import com.example.swordhealthchallenge.di.ViewModel.ViewModelModule
 import com.example.swordhealthchallenge.ui.catslist.CatsListFragment
+import com.example.swordhealthchallenge.ui.details.DetailsActivity
 import com.example.swordhealthchallenge.ui.favourites.FavouritesFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -24,4 +25,5 @@ interface AppComponent {
 
     fun inject(frag: CatsListFragment)
     fun inject(frag: FavouritesFragment)
+    fun inject(activity: DetailsActivity)
 }

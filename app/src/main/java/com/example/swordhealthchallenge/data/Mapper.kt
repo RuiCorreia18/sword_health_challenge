@@ -1,8 +1,10 @@
 package com.example.swordhealthchallenge.data
 
 import com.example.swordhealthchallenge.data.entities.CatByImageResponse
+import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
 import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.domain.Model.Cat
+import com.example.swordhealthchallenge.domain.Model.CatDetails
 import com.example.swordhealthchallenge.domain.Model.FavouriteCat
 
 fun List<CatResponse>.toDomainList(): List<Cat> {
@@ -23,5 +25,15 @@ fun CatByImageResponse.toDomainModel(): FavouriteCat {
         imageUrl = this.url,
         imageId = this.imageId,
         lifeSpan = this.breeds.first().life_span.split(" ").first()
+    )
+}
+fun CatDetailsResponse.toDomainModel(): CatDetails {
+    return CatDetails(
+        id = this.id,
+        breed = this.breed,
+        imageId = this.imageId,
+        origin = this.origin,
+        temperament = this.temperament,
+        description = this.description
     )
 }

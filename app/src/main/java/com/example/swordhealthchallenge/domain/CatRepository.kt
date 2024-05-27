@@ -1,6 +1,7 @@
 package com.example.swordhealthchallenge.domain
 
 import com.example.swordhealthchallenge.domain.Model.Cat
+import com.example.swordhealthchallenge.domain.Model.CatDetails
 import com.example.swordhealthchallenge.domain.Model.FavouriteCat
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -11,4 +12,5 @@ interface CatRepository {
     fun postFavouriteCat(imageId: String): Completable
     fun getFavouriteCats(): Single<List<String>>
     fun getCatByImageId(imageId: String): Single<FavouriteCat>
+    fun getCatDetails(catId: String): Single<CatDetails>
 }

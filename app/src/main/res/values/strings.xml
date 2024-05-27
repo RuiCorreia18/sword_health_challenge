@@ -2,6 +2,9 @@
     <string name="app_name">SwordHealthChallenge</string>
     <string name="title_list">Cats List</string>
     <string name="title_favourites">Favourites</string>
-    <string name="lifespan">LifeSpan: %1$s</string>
+    <string name="cat_lifespan">LifeSpan: %1$s</string>
+    <string name="cat_origin">Origin: %1$s</string>
+    <string name="cat_temperament">Temperament: %1$s</string>
+    <string name="cat_description">Description: %1$s</string>
     <!--<string name="title_notifications">Notifications</string>-->
 </resources>

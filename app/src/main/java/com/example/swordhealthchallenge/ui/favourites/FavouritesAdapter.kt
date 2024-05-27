@@ -42,7 +42,7 @@ class FavouritesAdapter(
         fun bind(cat: FavouriteCat) {
             with(binding) {
                 catBreedTextView.text = cat.breed
-                catLifespanTextView.text = root.context.getString(R.string.lifespan, cat.lifeSpan)
+                catLifespanTextView.text = root.context.getString(R.string.cat_lifespan, cat.lifeSpan)
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
                 if (cat.favourite) {
                     catFavouriteImageView.setColorFilter(Color.GREEN)
