@@ -5,4 +5,5 @@ data class Cat(
     val breed: String,
     val imageUrl: String,
     val imageId: String,
+    var favourite: Boolean = false
 )

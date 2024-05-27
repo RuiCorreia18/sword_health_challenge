@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,7 +21,7 @@ class CatsListFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val catsListAdapter = CatsListAdapter(emptyList())
+    private lateinit var catsListAdapter: CatsListAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -39,6 +40,10 @@ class CatsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity?.application as MainApplication).appComponent.inject(this)
 
+        catsListAdapter = CatsListAdapter(
+            catsList = emptyList(),
+            onFavouriteClick = { viewModel.favouriteCat(it) }
+        )
         binding.catListRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 3)
             adapter = catsListAdapter
@@ -48,12 +53,16 @@ class CatsListFragment : Fragment() {
             catsListAdapter.updateCatsList(catsList)
         }
 
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+
         hookSearchListener()
 
         viewModel.getCatList()
     }
 
-    private fun hookSearchListener(){
+    private fun hookSearchListener() {
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {

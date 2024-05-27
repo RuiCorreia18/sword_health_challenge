@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.databinding.FragmentFavouritesBinding
+import javax.inject.Inject
 
 class FavouritesFragment : Fragment() {
 
@@ -17,22 +21,44 @@ class FavouritesFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var catsListAdapter: FavouritesAdapter
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: FavouritesViewModel by viewModels { viewModelFactory }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity?.application as MainApplication).appComponent.inject(this)
+
+        catsListAdapter = FavouritesAdapter(
+            favouritesList = emptyList()
+        )
+
+        binding.catListRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = catsListAdapter
         }
-        return root
+
+        viewModel.favouriteCatsList.observe(viewLifecycleOwner) { catsList ->
+            catsListAdapter.updateCatsList(catsList)
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+
+
+        viewModel.getFavouriteCats()
+
     }
 
     override fun onDestroyView() {
