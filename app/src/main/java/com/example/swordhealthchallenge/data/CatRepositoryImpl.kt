@@ -1,7 +1,9 @@
 package com.example.swordhealthchallenge.data
 
+import com.example.swordhealthchallenge.data.entities.FavouriteCat
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.Model.Cat
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -20,5 +22,13 @@ class CatRepositoryImpl @Inject constructor(
         return remoteDataSource.searchCat(search)
             .map { res ->
                 res.toDomainList() }
+    }
+
+    override fun postFavouriteCat(imageId: String): Completable {
+        return remoteDataSource.postFavouriteCat(
+            FavouriteCat(imageId)
+        ).doOnComplete {
+
+        }
     }
 }

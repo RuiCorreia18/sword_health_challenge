@@ -17,3 +17,7 @@ data class CatImageResponse(
     @SerializedName("url")
     val url: String
 )
+
+data class FavouriteCat(
+    val image_id: String
+)

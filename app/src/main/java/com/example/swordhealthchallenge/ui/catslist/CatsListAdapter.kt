@@ -10,7 +10,8 @@ import com.example.swordhealthchallenge.databinding.CatListItemBinding
 import com.example.swordhealthchallenge.domain.Model.Cat
 
 class CatsListAdapter(
-    private var catsList: List<Cat>
+    private var catsList: List<Cat>,
+    private val onFavouriteClick: (String) -> Unit = {}
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
@@ -33,7 +34,7 @@ class CatsListAdapter(
     }
 
 
-    class CatsListViewHolder(
+    inner class CatsListViewHolder(
         private val binding: CatListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -41,16 +42,18 @@ class CatsListAdapter(
             with(binding) {
                 catBreedTextView.text = cat.breed
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
-                catItem.setOnClickListener {
-                    Log.e("CLICK CAT CARD", cat.id)
-                    //TODO Open Details Page
-                }
-
-                catFavouriteImageView.setOnClickListener {
-                    Log.e("CLICK FAV CAT CARD", cat.id)
+                if(cat.favourite){
                     catFavouriteImageView.setColorFilter(Color.GREEN)
-                    //TODO postFavourite
                 }
+            }
+
+            binding.catFavouriteImageView.setOnClickListener {
+                onFavouriteClick(cat.imageId)
+            }
+
+
+            binding.catItem.setOnClickListener {
+                Log.e("CLICK CAT CARD", cat.id)
             }
         }
     }

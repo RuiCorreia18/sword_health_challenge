@@ -4,6 +4,7 @@ import com.example.swordhealthchallenge.BuildConfig
 import com.example.swordhealthchallenge.data.CatApi
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
+import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -25,4 +26,6 @@ class AppModule {
 
     @Provides
     fun providesGetCatListUseCase(repository: CatRepository) = GetCatListUseCase(repository)
+    @Provides
+    fun providesPostFavouriteCatUseCase(repository: CatRepository) = PostFavouriteCatUseCase(repository)
 }
