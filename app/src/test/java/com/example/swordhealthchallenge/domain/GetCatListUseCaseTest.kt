@@ -37,10 +37,7 @@ class GetCatListUseCaseTest {
 
         useCase.getCatList()
             .test()
-            .assertComplete()
-            .assertNoErrors()
-            .values()
-            .contains(catListMock)
+            .assertResult(catListMock)
     }
 
     @Test
@@ -67,10 +64,7 @@ class GetCatListUseCaseTest {
 
         useCase.searchCat(searchText)
             .test()
-            .assertComplete()
-            .assertNoErrors()
-            .values()
-            .contains(catListMock)
+            .assertResult(catListMock)
     }
 
     @Test
@@ -90,33 +84,12 @@ class GetCatListUseCaseTest {
 
         useCase.getFavouriteCats()
             .test()
-            .assertComplete()
-            .assertNoErrors()
-            .values()
-            .contains(catFavInfoListMock)
+            .assertResult(catFavInfoListMock)
     }
 
     @Test
     fun `when getCatByImageId is success should return list of FavouriteCat`() {
         val imageId = "ImageId1"
-        val catFavListMock = listOf(
-            FavouriteCat(
-                id = "CatId1",
-                breed = "Breed1",
-                imageUrl = "URL1",
-                imageId = "ImageId1",
-                favouriteId = "FavId1",
-                lifeSpan= "LifeSpan",
-            ),
-            FavouriteCat(
-                id = "CatId2",
-                breed = "Breed2",
-                imageUrl = "URL2",
-                imageId = "ImageId2",
-                favouriteId = "FavId2",
-                lifeSpan= "LifeSpan",
-            ),
-        )
 
         val favCatMock = FavouriteCat(
             id = "CatId1",
@@ -132,9 +105,6 @@ class GetCatListUseCaseTest {
 
         useCase.getCatByImageId(imageId)
             .test()
-            .assertComplete()
-            .assertNoErrors()
-            .values()
-            .contains(favCatMock)
+            .assertResult(favCatMock)
     }
 }

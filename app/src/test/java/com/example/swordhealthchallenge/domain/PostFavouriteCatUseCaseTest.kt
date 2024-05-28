@@ -21,9 +21,7 @@ class PostFavouriteCatUseCaseTest {
         useCase.postFavouriteCat(imageId)
             .test()
             .await()
-            .assertComplete()
-            .values()
-            .contains(favId)
+            .assertResult(favId)
     }
 
     @Test

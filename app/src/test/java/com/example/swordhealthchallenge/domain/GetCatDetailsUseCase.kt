@@ -4,7 +4,6 @@ import com.example.swordhealthchallenge.domain.Model.CatDetails
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
@@ -31,11 +30,6 @@ class GetCatDetailsUseCase {
 
         useCase.getCatDetails(catId)
             .test()
-            .await()
-            .assertComplete()
-            .values()
-            .contains(catDetailsMock)
-
-        verify(exactly = 1) { repository.getCatDetails(catId) }
+            .assertResult(catDetailsMock)
     }
 }
