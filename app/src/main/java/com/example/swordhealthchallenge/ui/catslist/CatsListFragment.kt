@@ -1,6 +1,5 @@
 package com.example.swordhealthchallenge.ui.catslist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +9,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.swordhealthchallenge.MainApplication
+import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.FragmentCatsListBinding
-import com.example.swordhealthchallenge.ui.details.DetailsActivity
 import javax.inject.Inject
 
 class CatsListFragment : Fragment() {
@@ -82,12 +82,13 @@ class CatsListFragment : Fragment() {
     }
 
     private fun openCatDetails(catId: String, catImageUrl: String, isFavouriteCat: Boolean) {
-        val intent = Intent(this.activity, DetailsActivity::class.java).apply {
-            putExtra("catId",catId)
-            putExtra("catImageUrl",catImageUrl)
-            putExtra("isCatFavourite",isFavouriteCat)
+        val bundle = Bundle().apply {
+            putString("catId",catId)
+            putString("catImageUrl",catImageUrl)
+            putBoolean("isCatFavourite",isFavouriteCat)
         }
-        startActivity(intent)
+
+        findNavController().navigate(R.id.action_navigation_list_to_navigation_details, bundle)
     }
 
     override fun onDestroyView() {

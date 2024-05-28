@@ -54,6 +54,7 @@ class CatsListAdapter(
 
             binding.catItem.setOnClickListener {
                 onCardClick.invoke(cat.id, cat.imageUrl, cat.favourite)
+
             }
         }
     }

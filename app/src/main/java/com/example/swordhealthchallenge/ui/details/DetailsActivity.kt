@@ -40,7 +40,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun updateDetails(cat: CatDetails) {
         with(binding) {
-            Glide.with(root.context).load(cat.imageUrl).into(catImageView)
+            Glide.with(applicationContext).load(cat.imageUrl).into(catImageView)
             catBreedTextView.text = cat.breed
             catOriginTextView.text = getString(R.string.cat_origin, cat.origin)
             catTemperamentTextView.text = getString(R.string.cat_temperament, cat.temperament)

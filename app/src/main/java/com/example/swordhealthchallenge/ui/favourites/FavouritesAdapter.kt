@@ -12,7 +12,8 @@ import com.example.swordhealthchallenge.domain.Model.FavouriteCat
 
 class FavouritesAdapter(
     private var favouritesList: List<FavouriteCat>,
-    private val onFavouriteClick: (String) -> Unit = {}
+    //private val onFavouriteClick: (String) -> Unit = {},
+    private val onCardClick: (String, String) -> (Unit)
 ) : RecyclerView.Adapter<FavouritesAdapter.FavouritesListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesListViewHolder {
@@ -42,7 +43,8 @@ class FavouritesAdapter(
         fun bind(cat: FavouriteCat) {
             with(binding) {
                 catBreedTextView.text = cat.breed
-                catLifespanTextView.text = root.context.getString(R.string.cat_lifespan, cat.lifeSpan)
+                catLifespanTextView.text =
+                    root.context.getString(R.string.cat_lifespan, cat.lifeSpan)
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
                 if (cat.favourite) {
                     catFavouriteImageView.setColorFilter(Color.GREEN)
@@ -59,6 +61,7 @@ class FavouritesAdapter(
 
             binding.catItem.setOnClickListener {
                 Log.e("CLICK CAT FAV CARD", cat.id)
+                onCardClick.invoke(cat.id, cat.imageUrl)
             }
         }
     }

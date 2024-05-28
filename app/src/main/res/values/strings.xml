@@ -6,5 +6,6 @@
     <string name="cat_origin">Origin: %1$s</string>
     <string name="cat_temperament">Temperament: %1$s</string>
     <string name="cat_description">Description: %1$s</string>
+    <string name="details">Details</string>
     <!--<string name="title_notifications">Notifications</string>-->
 </resources>

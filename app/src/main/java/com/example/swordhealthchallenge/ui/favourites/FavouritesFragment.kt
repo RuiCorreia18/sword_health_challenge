@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.swordhealthchallenge.MainApplication
+import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.FragmentFavouritesBinding
 import javax.inject.Inject
 
@@ -41,7 +43,8 @@ class FavouritesFragment : Fragment() {
         (activity?.application as MainApplication).appComponent.inject(this)
 
         catsListAdapter = FavouritesAdapter(
-            favouritesList = emptyList()
+            favouritesList = emptyList(),
+            onCardClick = { id, url -> openCatDetails(id, url) }
         )
 
         binding.catListRecyclerView.apply {
@@ -56,9 +59,21 @@ class FavouritesFragment : Fragment() {
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
 
-
         viewModel.getFavouriteCats()
 
+    }
+
+    private fun openCatDetails(catId: String, catImageUrl: String) {
+        val bundle = Bundle().apply {
+            putString("catId", catId)
+            putString("catImageUrl", catImageUrl)
+            putBoolean("isCatFavourite", true)
+        }
+
+        findNavController().navigate(
+            R.id.action_navigation_favourites_to_navigation_details,
+            bundle
+        )
     }
 
     override fun onDestroyView() {
