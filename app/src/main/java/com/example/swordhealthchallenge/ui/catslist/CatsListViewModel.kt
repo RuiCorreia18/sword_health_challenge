@@ -1,6 +1,5 @@
 package com.example.swordhealthchallenge.ui.catslist
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,7 +30,6 @@ class CatsListViewModel @Inject constructor(
 
     private val compositeDisposable by lazy { CompositeDisposable() }
 
-    @SuppressLint("CheckResult")
     fun getCatList() {
         getCatListUseCase.getCatList()
             .subscribeOn(Schedulers.io())
@@ -82,7 +80,6 @@ class CatsListViewModel @Inject constructor(
             .addTo(compositeDisposable)
     }
 
-    @SuppressLint("CheckResult")
     fun deleteFavouriteCat(favouriteId: String) {
         deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
             .subscribeOn(Schedulers.io())
@@ -98,6 +95,7 @@ class CatsListViewModel @Inject constructor(
                     _errorMessage.value = "Problem deleting favourite cat"
                 }
             )
+            .addTo(compositeDisposable)
     }
 
     override fun onCleared() {
