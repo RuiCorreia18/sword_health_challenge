@@ -11,7 +11,7 @@ class GetCatListUseCase @Inject constructor(
     private val repository: CatRepository
 ) {
     fun getCatList(): Single<List<Cat>> = repository.getCatList()
-    fun searchCat(search: String) = repository.searchCat(search)
+    fun searchCat(search: String): Single<List<Cat>> = repository.searchCat(search)
     fun getFavouriteCats(): Single<List<FavouriteInfo>> = repository.getFavouriteCats()
     fun getCatByImageId(imageId: String): Single<FavouriteCat> = repository.getCatByImageId(imageId)
 }
