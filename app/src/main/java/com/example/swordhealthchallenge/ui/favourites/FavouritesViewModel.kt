@@ -34,15 +34,22 @@ class FavouritesViewModel @Inject constructor(
     fun getFavouriteCats() {
         getCatListUseCase.getFavouriteCats()
             .subscribeOn(Schedulers.io())
-            .flatMap { catUrlList ->
+            .flatMap { favouriteList ->
                 //converts to Observable sequence that emits URL one by one
-                Observable.fromIterable(catUrlList)
-                    .flatMapSingle { catImageUrl ->
-                        getCatListUseCase.getCatByImageId(catImageUrl)
+                Observable.fromIterable(favouriteList)
+                    .flatMapSingle { favourite ->
+                        getCatListUseCase.getCatByImageId(favourite.imageId)
                             .subscribeOn(Schedulers.io())
                             .onErrorResumeNext {
-                                Log.e("ERROR CAT API IMAGE", "url:${catImageUrl} $it")
+                                Log.e("ERROR CAT API IMAGE", "url:${favourite.imageId} $it")
                                 Single.just(FavouriteCat())
+                            }
+                            .map {
+                                if (it.imageUrl.isNotEmpty()) {
+                                    it.copy(favouriteId = favourite.favouriteId)
+                                }else {
+                                    it
+                                }
                             }
                     }
                     //Collects all to a List

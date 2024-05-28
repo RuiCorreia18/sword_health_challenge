@@ -5,6 +5,7 @@ import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.Model.Cat
 import com.example.swordhealthchallenge.domain.Model.CatDetails
 import com.example.swordhealthchallenge.domain.Model.FavouriteCat
+import com.example.swordhealthchallenge.domain.Model.FavouriteInfo
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -27,13 +28,15 @@ class CatRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun postFavouriteCat(imageId: String): Completable =
-        remoteDataSource.postFavouriteCat(FavouriteCatBody(imageId))
+    override fun postFavouriteCat(imageId: String): Single<String> =
+        remoteDataSource.postFavouriteCat(FavouriteCatBody(imageId)).map {
+            it.id
+        }
 
-    override fun getFavouriteCats(): Single<List<String>> {
+    override fun getFavouriteCats(): Single<List<FavouriteInfo>> {
         return remoteDataSource.getFavouriteCats()
             .map { res ->
-                res.map { it.image_id }.distinct()
+                res.toDomainModelList().distinctBy { it.imageId }
             }
     }
 
@@ -49,5 +52,9 @@ class CatRepositoryImpl @Inject constructor(
             .map { res ->
                 res.toDomainModel()
             }
+    }
+
+    override fun deleteFavouriteCat(favouriteId: String): Completable {
+        TODO("Not yet implemented")
     }
 }

@@ -46,7 +46,7 @@ class FavouritesAdapter(
                 catLifespanTextView.text =
                     root.context.getString(R.string.cat_lifespan, cat.lifeSpan)
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
-                if (cat.favourite) {
+                if (cat.favouriteId.isNotEmpty()) {
                     catFavouriteImageView.setColorFilter(Color.GREEN)
                 } else {
                     catFavouriteImageView.setColorFilter(Color.BLACK)

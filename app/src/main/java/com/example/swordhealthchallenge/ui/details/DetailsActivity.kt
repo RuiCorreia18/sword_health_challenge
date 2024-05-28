@@ -32,9 +32,14 @@ class DetailsActivity : AppCompatActivity() {
 
         val catId = intent.getStringExtra("catId")!!
         val catImageUrl = intent.getStringExtra("catImageUrl").orEmpty()
-        val isCatFavourite = intent.getBooleanExtra("isCatFavourite", false)
+        val catFavouriteId = if(intent.hasExtra("catFavouriteId")) {
+            intent.getStringExtra("catFavouriteId")
+        }else {
+            ""
+        }
 
-        viewModel.getCatDetails(catId, catImageUrl, isCatFavourite)
+
+        viewModel.getCatDetails(catId, catImageUrl, catFavouriteId!!)
 
     }
 
@@ -45,7 +50,7 @@ class DetailsActivity : AppCompatActivity() {
             catOriginTextView.text = getString(R.string.cat_origin, cat.origin)
             catTemperamentTextView.text = getString(R.string.cat_temperament, cat.temperament)
             catDescriptionTextView.text = getString(R.string.cat_description, cat.description)
-            if(cat.favourite){
+            if(cat.favouriteId.isNotEmpty()){
                 catFavouriteImageView.setColorFilter(Color.GREEN)
             }else{
                 catFavouriteImageView.setColorFilter(Color.BLACK)

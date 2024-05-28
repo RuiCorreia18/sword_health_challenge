@@ -6,9 +6,11 @@ import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
 import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
+import com.example.swordhealthchallenge.data.entities.PostFavouriteResponse
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -36,12 +38,15 @@ interface CatApi {
 
     @Headers("x-api-key: ${BuildConfig.API_KEY}")
     @POST("favourites")
-    fun postFavouriteCat(@Body imageId: FavouriteCatBody): Completable
+    fun postFavouriteCat(@Body imageId: FavouriteCatBody): Single<PostFavouriteResponse>
 
     @GET("images/{imageId}")
     fun getCatByImageId(@Path("imageId") imageId: String): Single<CatByImageResponse>
 
     @GET("breeds/{breedsId}")
     fun getCatDetails(@Path("breedsId") catId: String): Single<CatDetailsResponse>
+
+    @DELETE("favourites/{favouriteId}")
+    fun deleteFavourite(@Path("favouriteId") favouriteId: String): Completable
 
 }

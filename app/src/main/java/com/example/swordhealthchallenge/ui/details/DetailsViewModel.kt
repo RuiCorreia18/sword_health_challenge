@@ -20,7 +20,7 @@ class DetailsViewModel @Inject constructor(
         get() = _catDetails
 
     @SuppressLint("CheckResult")
-    fun getCatDetails(catId: String, catImageUrl: String, isCatFavourite: Boolean) {
+    fun getCatDetails(catId: String, catImageUrl: String, catFavouriteId: String) {
         getCatDetailsUseCase.getCatDetails(catId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -28,7 +28,7 @@ class DetailsViewModel @Inject constructor(
                 onSuccess = {
                     _catDetails.value = it.copy(
                         imageUrl = catImageUrl,
-                        favourite = isCatFavourite
+                        favouriteId = catFavouriteId
                     )
                 }
             )

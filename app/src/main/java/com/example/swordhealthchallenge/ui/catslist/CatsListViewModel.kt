@@ -1,7 +1,6 @@
 package com.example.swordhealthchallenge.ui.catslist
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -68,9 +67,9 @@ class CatsListViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onComplete = {
+                onSuccess = {
                     val tempCatList = catsList.value!!
-                    tempCatList.find { cat -> cat.imageId == imageId }?.favourite = true
+                    tempCatList.find { cat -> cat.imageId == imageId }?.favouriteId = it
                     _catsList.value = tempCatList
                 },
                 onError = {
@@ -79,10 +78,6 @@ class CatsListViewModel @Inject constructor(
                 }
             )
             .addTo(compositeDisposable)
-    }
-
-    fun openCatDetails(cat: Cat){
-        val intent = Intent()
     }
 
     override fun onCleared() {

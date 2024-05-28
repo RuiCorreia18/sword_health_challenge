@@ -81,11 +81,11 @@ class CatsListFragment : Fragment() {
         })
     }
 
-    private fun openCatDetails(catId: String, catImageUrl: String, isFavouriteCat: Boolean) {
+    private fun openCatDetails(catId: String, catImageUrl: String, favouriteId: String) {
         val bundle = Bundle().apply {
-            putString("catId",catId)
-            putString("catImageUrl",catImageUrl)
-            putBoolean("isCatFavourite",isFavouriteCat)
+            putString("catId", catId)
+            putString("catImageUrl", catImageUrl)
+            if (favouriteId.isNotEmpty()) putString("isCatFavourite", favouriteId)
         }
 
         findNavController().navigate(R.id.action_navigation_list_to_navigation_details, bundle)

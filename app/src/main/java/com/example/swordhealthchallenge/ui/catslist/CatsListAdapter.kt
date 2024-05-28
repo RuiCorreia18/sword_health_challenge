@@ -11,7 +11,7 @@ import com.example.swordhealthchallenge.domain.Model.Cat
 class CatsListAdapter(
     private var catsList: List<Cat>,
     private val onFavouriteClick: (String) -> Unit = {},
-    private val onCardClick:(String,String,Boolean) -> (Unit)
+    private val onCardClick:(String,String,String) -> (Unit)
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
@@ -41,7 +41,7 @@ class CatsListAdapter(
             with(binding) {
                 catBreedTextView.text = cat.breed
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
-                if(cat.favourite){
+                if(cat.favouriteId.isNotEmpty()){
                     catFavouriteImageView.setColorFilter(Color.GREEN)
                 }else{
                     catFavouriteImageView.setColorFilter(Color.BLACK)
@@ -53,7 +53,7 @@ class CatsListAdapter(
             }
 
             binding.catItem.setOnClickListener {
-                onCardClick.invoke(cat.id, cat.imageUrl, cat.favourite)
+                onCardClick.invoke(cat.id, cat.imageUrl, cat.favouriteId)
 
             }
         }

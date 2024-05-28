@@ -5,7 +5,7 @@ data class CatDetails(
     val breed: String,
     var imageUrl: String = "",
     val imageId: String,
-    var favourite: Boolean = false,
+    var favouriteId: String = "",
     val origin: String,
     val temperament: String,
     val description: String,
