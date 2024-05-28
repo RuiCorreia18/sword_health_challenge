@@ -38,9 +38,7 @@ class DetailsActivity : AppCompatActivity() {
             ""
         }
 
-
         viewModel.getCatDetails(catId, catImageUrl, catFavouriteId!!)
-
     }
 
     private fun updateDetails(cat: CatDetails) {
@@ -54,6 +52,14 @@ class DetailsActivity : AppCompatActivity() {
                 catFavouriteImageView.setColorFilter(Color.GREEN)
             }else{
                 catFavouriteImageView.setColorFilter(Color.BLACK)
+            }
+
+            catFavouriteImageView.setOnClickListener {
+                if(cat.favouriteId.isEmpty()){
+                    viewModel.favouriteCat(cat.imageId)
+                }else{
+                    viewModel.deleteFavouriteCat(cat.favouriteId)
+                }
             }
         }
     }

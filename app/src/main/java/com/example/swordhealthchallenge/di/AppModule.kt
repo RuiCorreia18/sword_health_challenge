@@ -3,6 +3,7 @@ package com.example.swordhealthchallenge.di
 import com.example.swordhealthchallenge.BuildConfig
 import com.example.swordhealthchallenge.data.CatApi
 import com.example.swordhealthchallenge.domain.CatRepository
+import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
@@ -31,4 +32,6 @@ class AppModule {
     fun providesPostFavouriteCatUseCase(repository: CatRepository) = PostFavouriteCatUseCase(repository)
     @Provides
     fun providesGetCatDetailsUseCase(repository: CatRepository) = GetCatDetailsUseCase(repository)
+    @Provides
+    fun providesDeleteFavouriteCatUseCase(repository: CatRepository) = DeleteFavouriteCatUseCase(repository)
 }

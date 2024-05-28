@@ -6,6 +6,7 @@ import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
 import com.example.swordhealthchallenge.data.entities.PostFavouriteResponse
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -19,5 +20,6 @@ class RemoteDataSource @Inject constructor(
     fun getFavouriteCats(): Single<List<FavouriteCatResponse>> = catApi.getFavouriteCats()
     fun getCatImage(imageId: String): Single<CatByImageResponse> = catApi.getCatByImageId(imageId)
     fun getCatDetails(catId: String): Single<CatDetailsResponse> = catApi.getCatDetails(catId)
+    fun deleteFavouriteCat(favouriteId: String): Completable = catApi.deleteFavourite(favouriteId)
 
 }

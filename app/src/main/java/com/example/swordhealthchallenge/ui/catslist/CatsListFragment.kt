@@ -44,7 +44,8 @@ class CatsListFragment : Fragment() {
 
         catsListAdapter = CatsListAdapter(
             catsList = emptyList(),
-            onFavouriteClick = { viewModel.favouriteCat(it) },
+            postFavouriteCat = { viewModel.favouriteCat(it) },
+            deleteFavouriteCat = { viewModel.deleteFavouriteCat(it) },
             onCardClick = { id, url, fav -> openCatDetails(id, url, fav) }
         )
         binding.catListRecyclerView.apply {

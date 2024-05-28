@@ -55,6 +55,6 @@ class CatRepositoryImpl @Inject constructor(
     }
 
     override fun deleteFavouriteCat(favouriteId: String): Completable {
-        TODO("Not yet implemented")
+        return remoteDataSource.deleteFavouriteCat(favouriteId)
     }
 }

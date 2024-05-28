@@ -44,7 +44,8 @@ class FavouritesFragment : Fragment() {
 
         catsListAdapter = FavouritesAdapter(
             favouritesList = emptyList(),
-            onCardClick = { id, url -> openCatDetails(id, url) }
+            onCardClick = { id, url -> openCatDetails(id, url) },
+            onFavouriteClick = { viewModel.deleteFavouriteCat(it) },
         )
 
         binding.catListRecyclerView.apply {

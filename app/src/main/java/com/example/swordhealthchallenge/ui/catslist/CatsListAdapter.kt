@@ -10,7 +10,8 @@ import com.example.swordhealthchallenge.domain.Model.Cat
 
 class CatsListAdapter(
     private var catsList: List<Cat>,
-    private val onFavouriteClick: (String) -> Unit = {},
+    private val postFavouriteCat: (String) -> Unit = {},
+    private val deleteFavouriteCat: (String) -> Unit = {},
     private val onCardClick:(String,String,String) -> (Unit)
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
 
@@ -49,7 +50,11 @@ class CatsListAdapter(
             }
 
             binding.catFavouriteImageView.setOnClickListener {
-                onFavouriteClick.invoke(cat.imageId)
+                if(cat.favouriteId.isEmpty()){
+                    postFavouriteCat.invoke(cat.imageId)
+                }else{
+                    deleteFavouriteCat.invoke(cat.favouriteId)
+                }
             }
 
             binding.catItem.setOnClickListener {

@@ -12,8 +12,8 @@ import com.example.swordhealthchallenge.domain.Model.FavouriteCat
 
 class FavouritesAdapter(
     private var favouritesList: List<FavouriteCat>,
-    //private val onFavouriteClick: (String) -> Unit = {},
-    private val onCardClick: (String, String) -> (Unit)
+    private val onCardClick: (String, String) -> (Unit),
+    private val onFavouriteClick: (String) -> Unit = {},
 ) : RecyclerView.Adapter<FavouritesAdapter.FavouritesListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesListViewHolder {
@@ -54,8 +54,7 @@ class FavouritesAdapter(
             }
 
             binding.catFavouriteImageView.setOnClickListener {
-                //TODO request DEL Favorite
-                //onFavouriteClick(cat.imageId)
+                onFavouriteClick.invoke(cat.favouriteId)
             }
 
 

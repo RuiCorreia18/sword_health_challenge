@@ -46,6 +46,7 @@ interface CatApi {
     @GET("breeds/{breedsId}")
     fun getCatDetails(@Path("breedsId") catId: String): Single<CatDetailsResponse>
 
+    @Headers("x-api-key: ${BuildConfig.API_KEY}")
     @DELETE("favourites/{favouriteId}")
     fun deleteFavourite(@Path("favouriteId") favouriteId: String): Completable
 

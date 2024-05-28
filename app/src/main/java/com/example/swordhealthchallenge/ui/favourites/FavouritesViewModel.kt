@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.swordhealthchallenge.domain.Model.FavouriteCat
+import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 class FavouritesViewModel @Inject constructor(
     private val getCatListUseCase: GetCatListUseCase,
+    private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
 ) : ViewModel() {
 
     private val _favouriteCatsList = MutableLiveData<List<FavouriteCat>>(emptyList())
@@ -66,6 +68,24 @@ class FavouritesViewModel @Inject constructor(
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    @SuppressLint("CheckResult")
+    fun deleteFavouriteCat(favouriteId: String) {
+        deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onComplete = {
+                    val tempCatList = favouriteCatsList.value!!.toMutableList()
+                    tempCatList.removeIf { it.favouriteId == favouriteId }
+                    _favouriteCatsList.value = tempCatList
+                },
+                onError = {
+                    Log.e("ERROR DELETE FAVOURITE CAT", it.toString())
+                    //_errorMessage.value = "Problem on Favourite Cat"
+                }
+            )
     }
 
 
