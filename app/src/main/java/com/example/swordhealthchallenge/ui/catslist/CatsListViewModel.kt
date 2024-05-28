@@ -44,7 +44,7 @@ class CatsListViewModel @Inject constructor(
                 },
                 onError = {
                     Log.e("ERROR CAT API BREED", it.toString())
-                    _errorMessage.value = "Problem Getting Cats"
+                    _errorMessage.value = "Problem getting cats list"
                 }
             )
             .addTo(compositeDisposable)
@@ -58,7 +58,7 @@ class CatsListViewModel @Inject constructor(
                 onSuccess = { _catsList.value = it },
                 onError = {
                     Log.e("ERROR CAT API BREED", it.toString())
-                    _errorMessage.value = "Problem Searching for Cats"
+                    _errorMessage.value = "Problem searching for Cats"
                 }
             )
             .addTo(compositeDisposable)
@@ -76,7 +76,7 @@ class CatsListViewModel @Inject constructor(
                 },
                 onError = {
                     Log.e("ERROR FAVOURITE CAT", it.toString())
-                    _errorMessage.value = "Problem on Favourite Cat"
+                    _errorMessage.value = "Problem saving favourite cat"
                 }
             )
             .addTo(compositeDisposable)
@@ -95,13 +95,13 @@ class CatsListViewModel @Inject constructor(
                 },
                 onError = {
                     Log.e("ERROR DELETE FAVOURITE CAT", it.toString())
-                    //_errorMessage.value = "Problem on Favourite Cat"
+                    _errorMessage.value = "Problem deleting favourite cat"
                 }
             )
     }
 
     override fun onCleared() {
-        super.onCleared()
         compositeDisposable.clear()
+        super.onCleared()
     }
 }

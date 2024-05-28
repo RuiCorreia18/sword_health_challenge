@@ -10,6 +10,8 @@ import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCas
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
@@ -24,6 +26,12 @@ class DetailsViewModel @Inject constructor(
     val catDetails: LiveData<CatDetails>
         get() = _catDetails
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
+    private val compositeDisposable by lazy { CompositeDisposable() }
+
     @SuppressLint("CheckResult")
     fun getCatDetails(catId: String, catImageUrl: String, catFavouriteId: String) {
         getCatDetailsUseCase.getCatDetails(catId)
@@ -35,8 +43,13 @@ class DetailsViewModel @Inject constructor(
                         imageUrl = catImageUrl,
                         favouriteId = catFavouriteId
                     )
+                },
+                onError = {
+                    Log.e("ERROR FAVOURITE CAT", it.toString())
+                    _errorMessage.value = "Problem getting catDetails"
                 }
             )
+            .addTo(compositeDisposable)
     }
 
     @SuppressLint("CheckResult")
@@ -51,9 +64,10 @@ class DetailsViewModel @Inject constructor(
                 },
                 onError = {
                     Log.e("ERROR POST FAVOURITE CAT", it.toString())
-                    //_errorMessage.value = "Problem on Favourite Cat"
+                    _errorMessage.value = "Problem saving favourite cat"
                 }
             )
+            .addTo(compositeDisposable)
     }
 
     @SuppressLint("CheckResult")
@@ -68,8 +82,14 @@ class DetailsViewModel @Inject constructor(
                 },
                 onError = {
                     Log.e("ERROR DELETE FAVOURITE CAT", it.toString())
-                    //_errorMessage.value = "Problem on Favourite Cat"
+                    _errorMessage.value = "Problem deleting favourite cat"
                 }
             )
+            .addTo(compositeDisposable)
+    }
+
+    override fun onCleared() {
+        compositeDisposable.clear()
+        super.onCleared()
     }
 }

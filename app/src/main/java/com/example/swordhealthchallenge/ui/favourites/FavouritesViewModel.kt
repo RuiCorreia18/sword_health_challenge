@@ -44,6 +44,7 @@ class FavouritesViewModel @Inject constructor(
                             .subscribeOn(Schedulers.io())
                             .onErrorResumeNext {
                                 Log.e("ERROR CAT API IMAGE", "url:${favourite.imageId} $it")
+                                //Added since i messed with api on postman i created some wrong data
                                 Single.just(FavouriteCat())
                             }
                             .map {
@@ -65,6 +66,7 @@ class FavouritesViewModel @Inject constructor(
                 },
                 onError = { error ->
                     Log.e("ERROR CAT API FAV", error.toString())
+                    _errorMessage.value = "Problem getting favourite cat list"
                 }
             )
             .addTo(compositeDisposable)
@@ -83,9 +85,14 @@ class FavouritesViewModel @Inject constructor(
                 },
                 onError = {
                     Log.e("ERROR DELETE FAVOURITE CAT", it.toString())
-                    //_errorMessage.value = "Problem on Favourite Cat"
+                    _errorMessage.value = "Problem deleting favourite cat"
                 }
             )
+    }
+
+    override fun onCleared() {
+        compositeDisposable.clear()
+        super.onCleared()
     }
 
 
