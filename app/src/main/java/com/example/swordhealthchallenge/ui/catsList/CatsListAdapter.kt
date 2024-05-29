@@ -9,15 +9,18 @@ import com.example.swordhealthchallenge.databinding.CatListItemBinding
 import com.example.swordhealthchallenge.domain.model.Cat
 
 class CatsListAdapter(
-    private var catsList: List<Cat>,
     private val postFavouriteCat: (String) -> Unit = {},
     private val deleteFavouriteCat: (String) -> Unit = {},
-    private val onCardClick:(String,String,String) -> (Unit)
+    private val onCardClick: (String, String, String) -> (Unit)
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
+
+    private var catsList = emptyList<Cat>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
         val itemBinding = CatListItemBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
 
         return CatsListViewHolder(itemBinding)
@@ -42,24 +45,23 @@ class CatsListAdapter(
             with(binding) {
                 catBreedTextView.text = cat.breed
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
-                if(cat.favouriteId.isNotEmpty()){
+                if (cat.favouriteId.isNotEmpty()) {
                     catFavouriteImageView.setColorFilter(Color.GREEN)
-                }else{
+                } else {
                     catFavouriteImageView.setColorFilter(Color.BLACK)
                 }
             }
 
             binding.catFavouriteImageView.setOnClickListener {
-                if(cat.favouriteId.isEmpty()){
+                if (cat.favouriteId.isEmpty()) {
                     postFavouriteCat.invoke(cat.imageId)
-                }else{
+                } else {
                     deleteFavouriteCat.invoke(cat.favouriteId)
                 }
             }
 
             binding.catItem.setOnClickListener {
                 onCardClick.invoke(cat.id, cat.imageUrl, cat.favouriteId)
-
             }
         }
     }

@@ -11,10 +11,11 @@ import com.example.swordhealthchallenge.databinding.FavouriteItemBinding
 import com.example.swordhealthchallenge.domain.model.FavouriteCat
 
 class FavouritesAdapter(
-    private var favouritesList: List<FavouriteCat>,
     private val onCardClick: (String, String, String) -> (Unit),
     private val onFavouriteClick: (String) -> Unit = {},
 ) : RecyclerView.Adapter<FavouritesAdapter.FavouritesListViewHolder>() {
+
+    private var favouritesList = emptyList<FavouriteCat>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesListViewHolder {
         val itemBinding = FavouriteItemBinding.inflate(

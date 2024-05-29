@@ -2,6 +2,7 @@ package com.example.swordhealthchallenge.ui.details
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +14,6 @@ import com.example.swordhealthchallenge.domain.model.CatDetails
 import javax.inject.Inject
 
 class DetailsActivity : AppCompatActivity() {
-
 
     private var _binding: ActivityDetailsBinding? = null
 
@@ -35,16 +35,15 @@ class DetailsActivity : AppCompatActivity() {
         viewModel.catDetails.observe(this) { catDetails ->
             updateDetails(catDetails)
         }
-
-        val catId = intent.getStringExtra("catId")!!
-        val catImageUrl = intent.getStringExtra("catImageUrl").orEmpty()
-        val catFavouriteId = if (intent.hasExtra("catFavouriteId")) {
-            intent.getStringExtra("catFavouriteId")
-        } else {
-            ""
+        viewModel.errorMessage.observe(this) { errorMessage ->
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.getCatDetails(catId, catImageUrl, catFavouriteId!!)
+        val catId = intent.getStringExtra("catId").orEmpty()
+        val catImageUrl = intent.getStringExtra("catImageUrl").orEmpty()
+        val catFavouriteId = intent.getStringExtra("catFavouriteId").orEmpty()
+
+        viewModel.getCatDetails(catId, catImageUrl, catFavouriteId)
     }
 
     private fun updateDetails(cat: CatDetails) {

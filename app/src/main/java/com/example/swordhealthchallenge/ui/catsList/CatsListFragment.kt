@@ -43,7 +43,6 @@ class CatsListFragment : Fragment() {
         (activity?.application as MainApplication).appComponent.inject(this)
 
         catsListAdapter = CatsListAdapter(
-            catsList = emptyList(),
             postFavouriteCat = { viewModel.favouriteCat(it) },
             deleteFavouriteCat = { viewModel.deleteFavouriteCat(it) },
             onCardClick = { id, url, fav -> openCatDetails(id, url, fav) }

@@ -42,12 +42,10 @@ class CatsListViewModel @Inject constructor(
             .subscribeBy(
                 onSuccess = { catList ->
                     // TODO Added this in case i got time for pagination
-                    val newCatList = catsList.value!!.plus(catList)
-                    _catsList.value = newCatList
+                    catsList.value?.let { _catsList.value = it.plus(catList) }
                 },
                 onError = {
-                    Log.e("ERROR CAT API BREED", it.toString())
-                    _errorMessage.value = "Problem getting cats list"
+                    errorHandle("ERROR CAT API BREED", it, "Problem getting cats list")
                 }
             )
             .addTo(compositeDisposable)
@@ -60,8 +58,7 @@ class CatsListViewModel @Inject constructor(
             .subscribeBy(
                 onSuccess = { _catsList.value = it },
                 onError = {
-                    Log.e("ERROR CAT API BREED", it.toString())
-                    _errorMessage.value = "Problem searching for Cats"
+                    errorHandle("ERROR CAT API BREED", it, "Problem searching for Cats")
                 }
             )
             .addTo(compositeDisposable)
@@ -80,16 +77,19 @@ class CatsListViewModel @Inject constructor(
             .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = {
-                    val tempCatList = catsList.value!!
-                    tempCatList.find { cat -> cat.imageId == imageId }?.favouriteId = it
-                    _catsList.value = tempCatList
+                    updateCatListWithFavourite(imageId, it)
                 },
                 onError = {
-                    Log.e("ERROR FAVOURITE CAT", it.toString())
-                    _errorMessage.value = "Problem saving favourite cat"
+                    errorHandle("ERROR FAVOURITE CAT", it, "Problem saving favourite cat")
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    private fun updateCatListWithFavourite(imageId: String, favId: String) {
+        val tempCatList = catsList.value.orEmpty()
+        tempCatList.find { cat -> cat.imageId == imageId }?.favouriteId = favId
+        _catsList.value = tempCatList
     }
 
     fun deleteFavouriteCat(favouriteId: String) {
@@ -98,16 +98,24 @@ class CatsListViewModel @Inject constructor(
             .observeOn(mainSchedulers)
             .subscribeBy(
                 onComplete = {
-                    val tempCatList = catsList.value!!
-                    tempCatList.find { cat -> cat.favouriteId == favouriteId }?.favouriteId = ""
-                    _catsList.value = tempCatList
+                    updateCatListNoFavourite(favouriteId)
                 },
                 onError = {
-                    Log.e("ERROR DELETE FAVOURITE CAT", it.toString())
-                    _errorMessage.value = "Problem deleting favourite cat"
+                    errorHandle("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    private fun updateCatListNoFavourite(favouriteId: String) {
+        val tempCatList = catsList.value.orEmpty()
+        tempCatList.find { cat -> cat.favouriteId == favouriteId }?.favouriteId = ""
+        _catsList.value = tempCatList
+    }
+
+    private fun errorHandle(tag: String, throwable: Throwable, errorMessage: String) {
+        Log.e(tag, throwable.toString())
+        _errorMessage.value = errorMessage
     }
 
     override fun onCleared() {

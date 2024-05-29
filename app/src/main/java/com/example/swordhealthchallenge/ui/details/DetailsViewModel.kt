@@ -45,8 +45,7 @@ class DetailsViewModel @Inject constructor(
                     )
                 },
                 onError = {
-                    Log.e("ERROR FAVOURITE CAT", it.toString())
-                    _errorMessage.value = "Problem getting catDetails"
+                    errorHandle("ERROR FAVOURITE CAT", it, "Problem getting catDetails")
                 }
             )
             .addTo(compositeDisposable)
@@ -58,12 +57,10 @@ class DetailsViewModel @Inject constructor(
             .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = {
-                    val cat = catDetails.value!!.copy(favouriteId = it)
-                    _catDetails.value = cat
+                    updateCatDetailsFavouriteId(it)
                 },
                 onError = {
-                    Log.e("ERROR POST FAVOURITE CAT", it.toString())
-                    _errorMessage.value = "Problem saving favourite cat"
+                    errorHandle("ERROR POST FAVOURITE CAT", it, "Problem saving favourite cat")
                 }
             )
             .addTo(compositeDisposable)
@@ -75,15 +72,23 @@ class DetailsViewModel @Inject constructor(
             .observeOn(mainSchedulers)
             .subscribeBy(
                 onComplete = {
-                    val cat = catDetails.value!!.copy(favouriteId = "")
-                    _catDetails.value = cat
+                    updateCatDetailsFavouriteId("")
                 },
                 onError = {
-                    Log.e("ERROR DELETE FAVOURITE CAT", it.toString())
-                    _errorMessage.value = "Problem deleting favourite cat"
+                    errorHandle("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    private fun updateCatDetailsFavouriteId(favId: String) {
+        val cat = catDetails.value!!.copy(favouriteId = favId)
+        _catDetails.value = cat
+    }
+
+    private fun errorHandle(tag: String, throwable: Throwable, errorMessage: String) {
+        Log.e(tag, throwable.toString())
+        _errorMessage.value = errorMessage
     }
 
     override fun onCleared() {

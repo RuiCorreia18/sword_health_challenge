@@ -15,6 +15,8 @@ import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.FragmentFavouritesBinding
 import javax.inject.Inject
 
+private const val RECYCLER_GRID_COLUMN_NUMBER = 3
+
 class FavouritesFragment : Fragment() {
 
     private var _binding: FragmentFavouritesBinding? = null
@@ -43,13 +45,12 @@ class FavouritesFragment : Fragment() {
         (activity?.application as MainApplication).appComponent.inject(this)
 
         catsListAdapter = FavouritesAdapter(
-            favouritesList = emptyList(),
             onCardClick = { id, url, favId -> openCatDetails(id, url, favId) },
             onFavouriteClick = { viewModel.deleteFavouriteCat(it) },
         )
 
         binding.catListRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 3)
+            layoutManager = GridLayoutManager(context, RECYCLER_GRID_COLUMN_NUMBER)
             adapter = catsListAdapter
         }
 
