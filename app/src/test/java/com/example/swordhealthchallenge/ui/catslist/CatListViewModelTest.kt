@@ -35,7 +35,7 @@ class CatListViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @Test
-    fun `test getCatList success`() {
+    fun `when getCatList success should fill livedata`() {
         val expected = listOf(catNoFav)
 
         every { getCatListUseCase.getCatList() } returns Single.just(expected)
@@ -46,12 +46,12 @@ class CatListViewModelTest {
     }
 
     @Test
-    fun `test searchCats success`() {
+    fun `when searchCats success should fill livedata`() {
         val search = "bree"
 
         val expected = listOf(catNoFav)
 
-        every { getCatListUseCase.searchCat(search)} returns Single.just(expected)
+        every { getCatListUseCase.searchCat(search) } returns Single.just(expected)
 
         viewModel.searchCats(search)
 
@@ -59,13 +59,13 @@ class CatListViewModelTest {
     }
 
     @Test
-    fun `test favouriteCat success`() {
+    fun `when favouriteCat success should update livedata`() {
         val imageId = "ImageId1"
         val favId = "FavId1"
         val cats = listOf(catNoFav)
         val expected = listOf(catFav)
 
-        every { postFavouriteCatUseCase.postFavouriteCat(imageId)} returns Single.just(favId)
+        every { postFavouriteCatUseCase.postFavouriteCat(imageId) } returns Single.just(favId)
         addCatsToLiveData(cats)
 
         viewModel.favouriteCat(imageId)
@@ -74,12 +74,12 @@ class CatListViewModelTest {
     }
 
     @Test
-    fun `test deleteFavouriteCat success`() {
+    fun `when deleteFavouriteCat success should update livedata`() {
         val favId = "FavId1"
         val cats = listOf(catFav)
         val expected = listOf(catNoFav)
 
-        every { deleteFavouriteCatUseCase.deleteFavouriteCat(favId)} returns Completable.complete()
+        every { deleteFavouriteCatUseCase.deleteFavouriteCat(favId) } returns Completable.complete()
         addCatsToLiveData(cats)
 
         viewModel.deleteFavouriteCat(favId)
@@ -87,8 +87,8 @@ class CatListViewModelTest {
         assertEquals(expected, viewModel.catsList.value)
     }
 
-    private fun addCatsToLiveData(catsList: List<Cat>){
-        every { getCatListUseCase.getCatList()} returns Single.just(catsList)
+    private fun addCatsToLiveData(catsList: List<Cat>) {
+        every { getCatListUseCase.getCatList() } returns Single.just(catsList)
         viewModel.getCatList()
     }
 }
