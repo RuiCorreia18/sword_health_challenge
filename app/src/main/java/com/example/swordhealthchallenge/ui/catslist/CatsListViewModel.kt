@@ -26,6 +26,8 @@ class CatsListViewModel @Inject constructor(
     val catsList: LiveData<List<Cat>>
         get() = _catsList
 
+    private val tempCatsList = mutableListOf<Cat>()
+
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
         get() = _errorMessage
@@ -33,6 +35,7 @@ class CatsListViewModel @Inject constructor(
     private val compositeDisposable by lazy { CompositeDisposable() }
 
     fun getCatList() {
+        tempCatsList.clear()
         getCatListUseCase.getCatList()
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
@@ -62,6 +65,13 @@ class CatsListViewModel @Inject constructor(
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    fun filterCatWithLocalSearch(catSearch: String) {
+        if (tempCatsList.isEmpty()) catsList.value?.let { tempCatsList.addAll(it) }
+        _catsList.value = tempCatsList.filter {
+            it.breed.lowercase().contains(catSearch.lowercase())
+        }
     }
 
     fun favouriteCat(imageId: String) {

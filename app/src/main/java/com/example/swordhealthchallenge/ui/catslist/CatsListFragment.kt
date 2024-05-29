@@ -77,8 +77,16 @@ class CatsListFragment : Fragment() {
                 }
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean = false
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query.isNullOrEmpty()) {
+                    viewModel.getCatList()
+                } else {
+                    viewModel.filterCatWithLocalSearch(query)
+                }
+                return true
+            }
         })
+
     }
 
     private fun openCatDetails(catId: String, catImageUrl: String, favouriteId: String) {
