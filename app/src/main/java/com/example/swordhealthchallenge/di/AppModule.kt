@@ -10,8 +10,12 @@ import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 
 @Module
 class AppModule {
@@ -34,4 +38,12 @@ class AppModule {
     fun providesGetCatDetailsUseCase(repository: CatRepository) = GetCatDetailsUseCase(repository)
     @Provides
     fun providesDeleteFavouriteCatUseCase(repository: CatRepository) = DeleteFavouriteCatUseCase(repository)
+
+    @Provides
+    @Named("io")
+    fun provideIoScheduler(): Scheduler = Schedulers.io()
+
+    @Provides
+    @Named("main")
+    fun provideMainScheduler(): Scheduler = AndroidSchedulers.mainThread()
 }

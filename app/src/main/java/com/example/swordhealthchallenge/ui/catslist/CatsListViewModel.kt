@@ -8,17 +8,19 @@ import com.example.swordhealthchallenge.domain.Model.Cat
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Named
 
 class CatsListViewModel @Inject constructor(
     private val getCatListUseCase: GetCatListUseCase,
     private val postFavouriteCatUseCase: PostFavouriteCatUseCase,
-    private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase
+    private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
+    @Named("io") private val ioSchedulers: Scheduler,
+    @Named("main") private val mainSchedulers: Scheduler,
 ) : ViewModel() {
     private val _catsList = MutableLiveData<List<Cat>>(emptyList())
     val catsList: LiveData<List<Cat>>
@@ -32,8 +34,8 @@ class CatsListViewModel @Inject constructor(
 
     fun getCatList() {
         getCatListUseCase.getCatList()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioSchedulers)
+            .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = { catList ->
                     //TODO Added this in case i got time for pagination
@@ -50,8 +52,8 @@ class CatsListViewModel @Inject constructor(
 
     fun searchCats(catSearch: String) {
         getCatListUseCase.searchCat(catSearch)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioSchedulers)
+            .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = { _catsList.value = it },
                 onError = {
@@ -64,8 +66,8 @@ class CatsListViewModel @Inject constructor(
 
     fun favouriteCat(imageId: String) {
         postFavouriteCatUseCase.postFavouriteCat(imageId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioSchedulers)
+            .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = {
                     val tempCatList = catsList.value!!
@@ -82,8 +84,8 @@ class CatsListViewModel @Inject constructor(
 
     fun deleteFavouriteCat(favouriteId: String) {
         deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioSchedulers)
+            .observeOn(mainSchedulers)
             .subscribeBy(
                 onComplete = {
                     val tempCatList = catsList.value!!
