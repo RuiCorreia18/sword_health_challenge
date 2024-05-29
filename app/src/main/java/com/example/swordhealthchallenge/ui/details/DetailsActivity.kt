@@ -13,7 +13,13 @@ import com.example.swordhealthchallenge.domain.model.CatDetails
 import javax.inject.Inject
 
 class DetailsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailsBinding
+
+
+    private var _binding: ActivityDetailsBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -24,7 +30,7 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
         (this.application as MainApplication).appComponent.inject(this)
 
-        binding = ActivityDetailsBinding.bind(findViewById(R.id.activityDetailsLayout))
+        _binding = ActivityDetailsBinding.bind(findViewById(R.id.activityDetailsLayout))
 
         viewModel.catDetails.observe(this) { catDetails ->
             updateDetails(catDetails)
@@ -62,5 +68,9 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

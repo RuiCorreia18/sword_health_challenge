@@ -12,7 +12,7 @@ import com.example.swordhealthchallenge.domain.model.FavouriteCat
 
 class FavouritesAdapter(
     private var favouritesList: List<FavouriteCat>,
-    private val onCardClick: (String, String) -> (Unit),
+    private val onCardClick: (String, String, String) -> (Unit),
     private val onFavouriteClick: (String) -> Unit = {},
 ) : RecyclerView.Adapter<FavouritesAdapter.FavouritesListViewHolder>() {
 
@@ -60,7 +60,7 @@ class FavouritesAdapter(
 
             binding.catItem.setOnClickListener {
                 Log.e("CLICK CAT FAV CARD", cat.id)
-                onCardClick.invoke(cat.id, cat.imageUrl)
+                onCardClick.invoke(cat.id, cat.imageUrl, cat.favouriteId)
             }
         }
     }

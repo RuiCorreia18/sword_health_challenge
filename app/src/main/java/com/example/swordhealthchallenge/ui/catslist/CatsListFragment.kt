@@ -85,7 +85,7 @@ class CatsListFragment : Fragment() {
         val bundle = Bundle().apply {
             putString("catId", catId)
             putString("catImageUrl", catImageUrl)
-            if (favouriteId.isNotEmpty()) putString("isCatFavourite", favouriteId)
+            if (favouriteId.isNotEmpty()) putString("catFavouriteId", favouriteId)
         }
 
         findNavController().navigate(R.id.action_navigation_list_to_navigation_details, bundle)
