@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.swordhealthchallenge.domain.Model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetails
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase

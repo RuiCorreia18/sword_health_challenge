@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.di.ViewModel
+package com.example.swordhealthchallenge.di.viewModel
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

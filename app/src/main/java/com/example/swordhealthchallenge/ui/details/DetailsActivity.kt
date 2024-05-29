@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.ActivityDetailsBinding
-import com.example.swordhealthchallenge.domain.Model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetails
 import javax.inject.Inject
 
 class DetailsActivity : AppCompatActivity() {
@@ -32,9 +32,9 @@ class DetailsActivity : AppCompatActivity() {
 
         val catId = intent.getStringExtra("catId")!!
         val catImageUrl = intent.getStringExtra("catImageUrl").orEmpty()
-        val catFavouriteId = if(intent.hasExtra("catFavouriteId")) {
+        val catFavouriteId = if (intent.hasExtra("catFavouriteId")) {
             intent.getStringExtra("catFavouriteId")
-        }else {
+        } else {
             ""
         }
 
@@ -48,20 +48,19 @@ class DetailsActivity : AppCompatActivity() {
             catOriginTextView.text = getString(R.string.cat_origin, cat.origin)
             catTemperamentTextView.text = getString(R.string.cat_temperament, cat.temperament)
             catDescriptionTextView.text = getString(R.string.cat_description, cat.description)
-            if(cat.favouriteId.isNotEmpty()){
+            if (cat.favouriteId.isNotEmpty()) {
                 catFavouriteImageView.setColorFilter(Color.GREEN)
-            }else{
+            } else {
                 catFavouriteImageView.setColorFilter(Color.BLACK)
             }
 
             catFavouriteImageView.setOnClickListener {
-                if(cat.favouriteId.isEmpty()){
+                if (cat.favouriteId.isEmpty()) {
                     viewModel.favouriteCat(cat.imageId)
-                }else{
+                } else {
                     viewModel.deleteFavouriteCat(cat.favouriteId)
                 }
             }
         }
     }
-
 }

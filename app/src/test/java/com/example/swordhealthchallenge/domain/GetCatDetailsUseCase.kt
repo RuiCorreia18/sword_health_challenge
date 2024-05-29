@@ -1,6 +1,6 @@
 package com.example.swordhealthchallenge.domain
 
-import com.example.swordhealthchallenge.domain.Model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetails
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import io.mockk.every
 import io.mockk.mockk

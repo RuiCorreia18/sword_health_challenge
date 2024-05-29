@@ -25,16 +25,13 @@ interface CatApi {
         @Query("limit") limit: String = "20",
     ): Single<List<CatResponse>>
 
-
     @Headers("x-api-key: ${BuildConfig.API_KEY}")
     @GET("breeds/search")
     fun searchCat(@Query("q") search: String): Single<List<CatResponse>>
 
-
     @Headers("x-api-key: ${BuildConfig.API_KEY}")
     @GET("favourites")
     fun getFavouriteCats(): Single<List<FavouriteCatResponse>>
-
 
     @Headers("x-api-key: ${BuildConfig.API_KEY}")
     @POST("favourites")
@@ -49,5 +46,4 @@ interface CatApi {
     @Headers("x-api-key: ${BuildConfig.API_KEY}")
     @DELETE("favourites/{favouriteId}")
     fun deleteFavourite(@Path("favouriteId") favouriteId: String): Completable
-
 }

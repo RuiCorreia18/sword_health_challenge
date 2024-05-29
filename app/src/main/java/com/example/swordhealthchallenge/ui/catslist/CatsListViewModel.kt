@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.swordhealthchallenge.domain.Model.Cat
+import com.example.swordhealthchallenge.domain.model.Cat
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
@@ -38,7 +38,7 @@ class CatsListViewModel @Inject constructor(
             .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = { catList ->
-                    //TODO Added this in case i got time for pagination
+                    // TODO Added this in case i got time for pagination
                     val newCatList = catsList.value!!.plus(catList)
                     _catsList.value = newCatList
                 },

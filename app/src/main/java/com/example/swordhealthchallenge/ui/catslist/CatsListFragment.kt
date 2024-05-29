@@ -73,7 +73,6 @@ class CatsListFragment : Fragment() {
                     viewModel.searchCats(query)
                     return true
                 } else {
-
                     return false
                 }
             }

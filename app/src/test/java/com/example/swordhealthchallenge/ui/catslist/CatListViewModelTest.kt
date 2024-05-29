@@ -1,7 +1,7 @@
 package com.example.swordhealthchallenge.ui.catslist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.swordhealthchallenge.domain.Model.Cat
+import com.example.swordhealthchallenge.domain.model.Cat
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase

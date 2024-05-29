@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.databinding.CatListItemBinding
-import com.example.swordhealthchallenge.domain.Model.Cat
+import com.example.swordhealthchallenge.domain.model.Cat
 
 class CatsListAdapter(
     private var catsList: List<Cat>,

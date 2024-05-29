@@ -1,6 +1,6 @@
 package com.example.swordhealthchallenge.ui.utils
 
-import com.example.swordhealthchallenge.domain.Model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetails
 
 object CatDetailsDomainModelFakes {
     val catDetailsNoFav1 = CatDetails(

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.FavouriteItemBinding
-import com.example.swordhealthchallenge.domain.Model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteCat
 
 class FavouritesAdapter(
     private var favouritesList: List<FavouriteCat>,

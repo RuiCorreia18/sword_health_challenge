@@ -1,7 +1,7 @@
 package com.example.swordhealthchallenge.domain.usecases
 
 import com.example.swordhealthchallenge.domain.CatRepository
-import com.example.swordhealthchallenge.domain.Model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetails
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 

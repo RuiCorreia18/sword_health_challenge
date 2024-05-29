@@ -61,7 +61,6 @@ class FavouritesFragment : Fragment() {
         }
 
         viewModel.getFavouriteCats()
-
     }
 
     private fun openCatDetails(catId: String, catImageUrl: String) {

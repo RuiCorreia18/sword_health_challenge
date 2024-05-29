@@ -1,7 +1,7 @@
 package com.example.swordhealthchallenge.di
 
 import android.content.Context
-import com.example.swordhealthchallenge.di.ViewModel.ViewModelModule
+import com.example.swordhealthchallenge.di.viewModel.ViewModelModule
 import com.example.swordhealthchallenge.ui.catslist.CatsListFragment
 import com.example.swordhealthchallenge.ui.details.DetailsActivity
 import com.example.swordhealthchallenge.ui.favourites.FavouritesFragment
@@ -15,7 +15,6 @@ import javax.inject.Singleton
         AppModule::class,
     ]
 )
-
 @Singleton
 interface AppComponent {
     @Component.Factory

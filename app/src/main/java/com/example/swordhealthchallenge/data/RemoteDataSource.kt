@@ -13,7 +13,7 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val catApi: CatApi
 ) {
-    //page
+    // page
     fun getCatList(): Single<List<CatResponse>> = catApi.getCatList()
     fun searchCat(search: String): Single<List<CatResponse>> = catApi.searchCat(search)
     fun postFavouriteCat(favouriteCat: FavouriteCatBody): Single<PostFavouriteResponse> = catApi.postFavouriteCat(favouriteCat)
@@ -21,5 +21,4 @@ class RemoteDataSource @Inject constructor(
     fun getCatImage(imageId: String): Single<CatByImageResponse> = catApi.getCatByImageId(imageId)
     fun getCatDetails(catId: String): Single<CatDetailsResponse> = catApi.getCatDetails(catId)
     fun deleteFavouriteCat(favouriteId: String): Completable = catApi.deleteFavourite(favouriteId)
-
 }

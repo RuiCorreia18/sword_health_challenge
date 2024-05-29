@@ -1,8 +1,7 @@
 package com.example.swordhealthchallenge.ui.favourites
 
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.swordhealthchallenge.domain.Model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.FavouriteInfo
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favCat1
@@ -69,5 +68,4 @@ class FavouritesViewModelTest {
 
         viewModel.getFavouriteCats()
     }
-
 }

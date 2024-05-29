@@ -1,9 +1,9 @@
 package com.example.swordhealthchallenge.domain
 
-import com.example.swordhealthchallenge.domain.Model.Cat
-import com.example.swordhealthchallenge.domain.Model.CatDetails
-import com.example.swordhealthchallenge.domain.Model.FavouriteCat
-import com.example.swordhealthchallenge.domain.Model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.Cat
+import com.example.swordhealthchallenge.domain.model.CatDetails
+import com.example.swordhealthchallenge.domain.model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteInfo
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 

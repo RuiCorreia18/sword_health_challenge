@@ -37,7 +37,6 @@ class DetailsViewModelTest {
     fun `when getCatDetails success should fill livedata`() {
         val expected = catDetailsNoFav1
 
-
         every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)
         viewModel.getCatDetails("1", "URL1", "")
 
@@ -73,5 +72,4 @@ class DetailsViewModelTest {
 
         Assert.assertEquals(expected, viewModel.catDetails.value)
     }
-
 }

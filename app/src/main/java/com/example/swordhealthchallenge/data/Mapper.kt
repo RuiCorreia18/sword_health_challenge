@@ -4,18 +4,18 @@ import com.example.swordhealthchallenge.data.entities.CatByImageResponse
 import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
 import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
-import com.example.swordhealthchallenge.domain.Model.Cat
-import com.example.swordhealthchallenge.domain.Model.CatDetails
-import com.example.swordhealthchallenge.domain.Model.FavouriteCat
-import com.example.swordhealthchallenge.domain.Model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.Cat
+import com.example.swordhealthchallenge.domain.model.CatDetails
+import com.example.swordhealthchallenge.domain.model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteInfo
 
 fun List<CatResponse>.toDomainList(): List<Cat> {
     return this.map {
         Cat(
             id = it.id,
             breed = it.name,
-            imageUrl = it.image.url ?: "",
-            imageId = it.image.id ?: "",
+            imageUrl = it.image.url,
+            imageId = it.image.id,
         )
     }
 }

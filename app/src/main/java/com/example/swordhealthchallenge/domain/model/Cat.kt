@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.domain.Model
+package com.example.swordhealthchallenge.domain.model
 
 data class Cat(
     val id: String,

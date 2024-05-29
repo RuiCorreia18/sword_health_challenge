@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.swordhealthchallenge.domain.Model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteCat
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import io.reactivex.rxjava3.core.Observable
@@ -37,25 +37,25 @@ class FavouritesViewModel @Inject constructor(
         getCatListUseCase.getFavouriteCats()
             .subscribeOn(ioSchedulers)
             .flatMap { favouriteList ->
-                //converts to Observable sequence that emits URL one by one
+                // converts to Observable sequence that emits URL one by one
                 Observable.fromIterable(favouriteList)
                     .flatMapSingle { favourite ->
                         getCatListUseCase.getCatByImageId(favourite.imageId)
                             .subscribeOn(ioSchedulers)
                             .onErrorResumeNext {
                                 Log.e("ERROR CAT API IMAGE", "url:${favourite.imageId} $it")
-                                //Added since i messed with api on postman i created some wrong data
+                                // Added since i messed with api on postman i created some wrong data
                                 Single.just(FavouriteCat())
                             }
                             .map {
                                 if (it.imageUrl.isNotEmpty()) {
                                     it.copy(favouriteId = favourite.favouriteId)
-                                }else {
+                                } else {
                                     it
                                 }
                             }
                     }
-                    //Collects all to a List
+                    // Collects all to a List
                     .toList()
                     .map { it.filter { cat -> cat != FavouriteCat() } }
             }

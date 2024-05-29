@@ -2,10 +2,10 @@ package com.example.swordhealthchallenge.data
 
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.domain.CatRepository
-import com.example.swordhealthchallenge.domain.Model.Cat
-import com.example.swordhealthchallenge.domain.Model.CatDetails
-import com.example.swordhealthchallenge.domain.Model.FavouriteCat
-import com.example.swordhealthchallenge.domain.Model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.Cat
+import com.example.swordhealthchallenge.domain.model.CatDetails
+import com.example.swordhealthchallenge.domain.model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteInfo
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
