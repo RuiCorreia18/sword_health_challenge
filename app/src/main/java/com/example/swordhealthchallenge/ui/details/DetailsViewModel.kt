@@ -45,7 +45,7 @@ class DetailsViewModel @Inject constructor(
                     )
                 },
                 onError = {
-                    errorHandle("ERROR FAVOURITE CAT", it, "Problem getting catDetails")
+                    updateError("ERROR FAVOURITE CAT", it, "Problem getting catDetails")
                 }
             )
             .addTo(compositeDisposable)
@@ -60,7 +60,7 @@ class DetailsViewModel @Inject constructor(
                     updateCatDetailsFavouriteId(it)
                 },
                 onError = {
-                    errorHandle("ERROR POST FAVOURITE CAT", it, "Problem saving favourite cat")
+                    updateError("ERROR POST FAVOURITE CAT", it, "Problem saving favourite cat")
                 }
             )
             .addTo(compositeDisposable)
@@ -75,7 +75,7 @@ class DetailsViewModel @Inject constructor(
                     updateCatDetailsFavouriteId("")
                 },
                 onError = {
-                    errorHandle("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
+                    updateError("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
                 }
             )
             .addTo(compositeDisposable)
@@ -86,7 +86,7 @@ class DetailsViewModel @Inject constructor(
         _catDetails.value = cat
     }
 
-    private fun errorHandle(tag: String, throwable: Throwable, errorMessage: String) {
+    private fun updateError(tag: String, throwable: Throwable, errorMessage: String) {
         Log.e(tag, throwable.toString())
         _errorMessage.value = errorMessage
     }

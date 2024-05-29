@@ -45,7 +45,7 @@ class CatsListViewModel @Inject constructor(
                     catsList.value?.let { _catsList.value = it.plus(catList) }
                 },
                 onError = {
-                    errorHandle("ERROR CAT API BREED", it, "Problem getting cats list")
+                    updateError("ERROR CAT API BREED", it, "Problem getting cats list")
                 }
             )
             .addTo(compositeDisposable)
@@ -58,7 +58,7 @@ class CatsListViewModel @Inject constructor(
             .subscribeBy(
                 onSuccess = { _catsList.value = it },
                 onError = {
-                    errorHandle("ERROR CAT API BREED", it, "Problem searching for Cats")
+                    updateError("ERROR CAT API BREED", it, "Problem searching for Cats")
                 }
             )
             .addTo(compositeDisposable)
@@ -80,7 +80,7 @@ class CatsListViewModel @Inject constructor(
                     updateCatListWithFavourite(imageId, it)
                 },
                 onError = {
-                    errorHandle("ERROR FAVOURITE CAT", it, "Problem saving favourite cat")
+                    updateError("ERROR FAVOURITE CAT", it, "Problem saving favourite cat")
                 }
             )
             .addTo(compositeDisposable)
@@ -101,7 +101,7 @@ class CatsListViewModel @Inject constructor(
                     updateCatListNoFavourite(favouriteId)
                 },
                 onError = {
-                    errorHandle("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
+                    updateError("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
                 }
             )
             .addTo(compositeDisposable)
@@ -113,7 +113,7 @@ class CatsListViewModel @Inject constructor(
         _catsList.value = tempCatList
     }
 
-    private fun errorHandle(tag: String, throwable: Throwable, errorMessage: String) {
+    private fun updateError(tag: String, throwable: Throwable, errorMessage: String) {
         Log.e(tag, throwable.toString())
         _errorMessage.value = errorMessage
     }

@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.swordhealthchallenge.domain.model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteInfo
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -36,40 +36,36 @@ class FavouritesViewModel @Inject constructor(
     fun getFavouriteCats() {
         getCatListUseCase.getFavouriteCats()
             .subscribeOn(ioSchedulers)
-            .flatMap { favouriteList ->
-                // converts to Observable sequence that emits URL one by one
-                Observable.fromIterable(favouriteList)
-                    .flatMapSingle { favourite ->
-                        getCatListUseCase.getCatByImageId(favourite.imageId)
-                            .subscribeOn(ioSchedulers)
-                            .onErrorResumeNext {
-                                Log.e("ERROR CAT API IMAGE", "url:${favourite.imageId} $it")
-                                // Added since i messed with api on postman i created some wrong data
-                                Single.just(FavouriteCat())
-                            }
-                            .map {
-                                if (it.imageUrl.isNotEmpty()) {
-                                    it.copy(favouriteId = favourite.favouriteId)
-                                } else {
-                                    it
-                                }
-                            }
-                    }
-                    // Collects all to a List
-                    .toList()
-                    .map { it.filter { cat -> cat != FavouriteCat() } }
-            }
+            .flattenAsObservable { infoList -> infoList }
+            .flatMapSingle { info -> fetchCatByImageId(info) }
+            .filter { it != FavouriteCat() }
+            .toList()
             .observeOn(mainSchedulers)
             .subscribeBy(
                 onSuccess = { favouriteCats ->
                     _favouriteCatsList.value = favouriteCats.sortedBy { it.breed }
                 },
                 onError = {
-                    errorHandle("ERROR CAT API FAV", it, "Problem getting favourite cat list")
+                    updateError(
+                        "ERROR CAT API FAV",
+                        it,
+                        "Problem getting favourite cat list"
+                    )
                 }
             )
             .addTo(compositeDisposable)
     }
+
+    private fun fetchCatByImageId(info: FavouriteInfo) =
+        getCatListUseCase.getCatByImageId(info.imageId)
+            .onErrorResumeNext { throwable ->
+                Log.e("ERROR CAT API IMAGE", "url:${info.imageId} $throwable")
+                // Added since i messed with api on postman i created some wrong data
+                Single.just(FavouriteCat())
+            }
+            .map { cat ->
+                if (cat.imageUrl.isNotEmpty()) cat.copy(favouriteId = info.favouriteId) else cat
+            }
 
     fun deleteFavouriteCat(favouriteId: String) {
         deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
@@ -80,7 +76,7 @@ class FavouritesViewModel @Inject constructor(
                     updateListWithoutFavourite(favouriteId)
                 },
                 onError = {
-                    errorHandle("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
+                    updateError("ERROR DELETE FAVOURITE CAT", it, "Problem deleting favourite cat")
                 }
             )
             .addTo(compositeDisposable)
@@ -92,7 +88,7 @@ class FavouritesViewModel @Inject constructor(
         _favouriteCatsList.value = tempCatList
     }
 
-    private fun errorHandle(tag: String, throwable: Throwable, errorMessage: String) {
+    private fun updateError(tag: String, throwable: Throwable, errorMessage: String) {
         Log.e(tag, throwable.toString())
         _errorMessage.value = errorMessage
     }
