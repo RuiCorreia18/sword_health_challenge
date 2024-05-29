@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.ui.catslist
+package com.example.swordhealthchallenge.ui.catsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.swordhealthchallenge.domain.model.Cat

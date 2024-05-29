@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.ui.catslist
+package com.example.swordhealthchallenge.ui.catsList
 
 import android.graphics.Color
 import android.view.LayoutInflater

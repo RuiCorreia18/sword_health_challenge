@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.swordhealthchallenge.data.CatRepositoryImpl
 import com.example.swordhealthchallenge.domain.CatRepository
-import com.example.swordhealthchallenge.ui.catslist.CatsListViewModel
+import com.example.swordhealthchallenge.ui.catsList.CatsListViewModel
 import com.example.swordhealthchallenge.ui.details.DetailsViewModel
 import com.example.swordhealthchallenge.ui.favourites.FavouritesViewModel
 import dagger.Binds
