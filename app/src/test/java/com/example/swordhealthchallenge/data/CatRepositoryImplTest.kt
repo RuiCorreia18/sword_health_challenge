@@ -1,6 +1,5 @@
 package com.example.swordhealthchallenge.data
 
-import com.example.swordhealthchallenge.data.local.LocalDataSource
 import com.example.swordhealthchallenge.data.remote.CatRepositoryImpl
 import com.example.swordhealthchallenge.data.remote.RemoteDataSource
 import com.example.swordhealthchallenge.data.remote.model.Breed
@@ -21,11 +20,10 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class CatEntityDomainModelRepositoryImplTest {
+class CatRepositoryImplTest {
 
     private val remoteDataSource: RemoteDataSource = mockk()
-    private val localDataSource: LocalDataSource = mockk()
-    private val repository = CatRepositoryImpl(remoteDataSource, localDataSource)
+    private val repository = CatRepositoryImpl(remoteDataSource)
 
     @Test
     fun `should return list of Cat if getCatList is success`() {
@@ -54,6 +52,9 @@ class CatEntityDomainModelRepositoryImplTest {
                     url = "URL1",
                     id = "ImageId1",
                 ),
+                temperament = "Temperament1",
+                origin = "Origin1",
+                description = "Description1",
             ),
             CatResponse(
                 id = "CatId2",
@@ -62,14 +63,15 @@ class CatEntityDomainModelRepositoryImplTest {
                     url = "URL2",
                     id = "ImageId2",
                 ),
+                temperament = "Temperament2",
+                origin = "Origin2",
+                description = "Description2",
             ),
         )
 
         every { remoteDataSource.getCatList() } returns Single.just(catListResponseMock)
 
-        repository.getCatList()
-            .test()
-            .assertResult(catDomainModelListMocks)
+        repository.getCatList().test().assertResult(catListResponseMock)
     }
 
     @Test
@@ -100,6 +102,9 @@ class CatEntityDomainModelRepositoryImplTest {
                     url = "URL1",
                     id = "ImageId1",
                 ),
+                temperament = "Temperament1",
+                origin = "Origin1",
+                description = "Description1",
             ),
             CatResponse(
                 id = "CatId2",
@@ -108,14 +113,15 @@ class CatEntityDomainModelRepositoryImplTest {
                     url = "URL2",
                     id = "ImageId2",
                 ),
+                temperament = "Temperament2",
+                origin = "Origin2",
+                description = "Description2",
             ),
         )
 
         every { remoteDataSource.searchCat(searchText) } returns Single.just(catListResponseMock)
 
-        repository.searchCat(searchText)
-            .test()
-            .assertResult(catDomainModelListMocks)
+        repository.searchCat(searchText).test().assertResult(catDomainModelListMocks)
     }
 
     @Test
@@ -127,40 +133,32 @@ class CatEntityDomainModelRepositoryImplTest {
 
         every { remoteDataSource.postFavouriteCat(favBody) } returns Single.just(postFavResponse)
 
-        repository.postFavouriteCat(imageUrl)
-            .test()
-            .assertResult(favId)
+        repository.postFavouriteCat(imageUrl).test().assertResult(favId)
     }
 
     @Test
     fun `should return list of favourite info if getFavouriteCats is success`() {
         val favCatResponseListMock = listOf(
             FavouriteCatResponse(
-                id = "1",
-                image_id = "ImageId1"
+                id = "1", image_id = "ImageId1"
             ),
             FavouriteCatResponse(
-                id = "2",
-                image_id = "ImageId2"
+                id = "2", image_id = "ImageId2"
             ),
         )
 
         val favInfoListMock = listOf(
             FavouriteInfoDomainModel(
-                favouriteId = "1",
-                imageId = "ImageId1"
+                favouriteId = "1", imageId = "ImageId1"
             ),
             FavouriteInfoDomainModel(
-                favouriteId = "2",
-                imageId = "ImageId2"
+                favouriteId = "2", imageId = "ImageId2"
             ),
         )
 
         every { remoteDataSource.getFavouriteCats() } returns Single.just(favCatResponseListMock)
 
-        repository.getFavouriteCats()
-            .test()
-            .assertResult(favInfoListMock)
+        repository.getFavouriteCats().test().assertResult(favInfoListMock)
     }
 
     @Test
@@ -169,13 +167,9 @@ class CatEntityDomainModelRepositoryImplTest {
         val catByImageResponseListMock = CatByImageResponse(
             breeds = listOf(
                 Breed(
-                    id = "1",
-                    life_span = "5 - 8",
-                    name = "Breed1"
+                    id = "1", life_span = "5 - 8", name = "Breed1"
                 )
-            ),
-            imageId = imageId,
-            url = "ImageUrl"
+            ), imageId = imageId, url = "ImageUrl"
         )
 
         val favCatMock = FavouriteCatDomainModel(
@@ -187,11 +181,11 @@ class CatEntityDomainModelRepositoryImplTest {
             lifeSpan = "5"
         )
 
-        every { remoteDataSource.getCatImage(imageId) } returns Single.just(catByImageResponseListMock)
+        every { remoteDataSource.getCatImage(imageId) } returns Single.just(
+            catByImageResponseListMock
+        )
 
-        repository.getCatByImageId(imageId)
-            .test()
-            .assertResult(favCatMock)
+        repository.getCatByImageId(imageId).test().assertResult(favCatMock)
     }
 
     @Test
@@ -217,9 +211,7 @@ class CatEntityDomainModelRepositoryImplTest {
 
         every { remoteDataSource.getCatDetails(catId) } returns Single.just(catDetailsResponseMock)
 
-        repository.getCatDetails(catId)
-            .test()
-            .assertResult(catDetailsDomainModelMock)
+        repository.getCatDetails(catId).test().assertResult(catDetailsDomainModelMock)
     }
 
     @Test
@@ -228,8 +220,6 @@ class CatEntityDomainModelRepositoryImplTest {
 
         every { remoteDataSource.deleteFavouriteCat(favId) } returns Completable.complete()
 
-        repository.deleteFavouriteCat(favId)
-            .test()
-            .assertComplete()
+        repository.deleteFavouriteCat(favId).test().assertComplete()
     }
 }

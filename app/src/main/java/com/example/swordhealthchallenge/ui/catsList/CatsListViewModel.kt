@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
-import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
+import com.example.swordhealthchallenge.domain.usecases.GetCatsListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.SearchCatsUseCase
 import io.reactivex.rxjava3.core.Scheduler
@@ -17,7 +17,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class CatsListViewModel @Inject constructor(
-    private val getCatListUseCase: GetCatListUseCase,
+    private val getCatListUseCase: GetCatsListUseCase,
     private val postFavouriteCatUseCase: PostFavouriteCatUseCase,
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
     private val searchCatsUseCase: SearchCatsUseCase,
@@ -38,7 +38,7 @@ class CatsListViewModel @Inject constructor(
 
     fun getCatList() {
         tempCatsList.clear()
-        getCatListUseCase.getCatList()
+        getCatListUseCase()
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(

@@ -3,13 +3,15 @@ package com.example.swordhealthchallenge.domain
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
 import io.mockk.every
 import io.mockk.mockk
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class PostFavouriteCatDomainModelUseCaseTestDomainModelEntity {
+class PostFavouriteCatUseCaseTest {
 
     private val repository: CatRepository = mockk()
-    private val useCase = PostFavouriteCatUseCase(repository)
+    private val localRepository: CatLocalRepository = mockk()
+    private val useCase = PostFavouriteCatUseCase(repository, localRepository)
 
     @Test
     fun `when postFavouriteCat is success should return String`() {
@@ -17,8 +19,9 @@ class PostFavouriteCatDomainModelUseCaseTestDomainModelEntity {
         val favId = "Favid"
 
         every { repository.postFavouriteCat(imageId) } returns Single.just(favId)
+        every { localRepository.setFavouriteCat(any(),any()) } returns Completable.complete()
 
-        useCase.postFavouriteCat(imageId)
+        useCase(imageId)
             .test()
             .await()
             .assertResult(favId)
@@ -30,7 +33,7 @@ class PostFavouriteCatDomainModelUseCaseTestDomainModelEntity {
 
         every { repository.postFavouriteCat(any()) } returns Single.error(error)
 
-        useCase.postFavouriteCat("")
+        useCase("")
             .test()
             .assertNotComplete()
             .assertError(error)

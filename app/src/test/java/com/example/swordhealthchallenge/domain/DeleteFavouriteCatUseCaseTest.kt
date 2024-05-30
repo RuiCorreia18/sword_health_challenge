@@ -6,16 +6,18 @@ import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
 import org.junit.Test
 
-class DeleteFavouriteCatDomainModelUseCaseTestDomainModelEntity {
+class DeleteFavouriteCatUseCaseTest {
 
     private val repository: CatRepository = mockk()
-    private val useCase = DeleteFavouriteCatUseCase(repository)
+    private val localRepository: CatLocalRepository = mockk()
+    private val useCase = DeleteFavouriteCatUseCase(repository, localRepository)
 
     @Test
-    fun `when delete is success should complete`(){
+    fun `when delete is success should complete`() {
         every { repository.deleteFavouriteCat(any()) } returns Completable.complete()
+        every { localRepository.deleteFavouriteCat(any()) } returns Completable.complete()
 
-        useCase.deleteFavouriteCat("")
+        useCase("")
             .test()
             .assertComplete()
     }

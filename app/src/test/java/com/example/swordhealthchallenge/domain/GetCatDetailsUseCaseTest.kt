@@ -7,7 +7,7 @@ import io.mockk.mockk
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class GetCatDetailsDomainModelUseCaseDomainModelEntity {
+class GetCatDetailsUseCaseTest {
 
     private val repository: CatRepository = mockk()
     private val useCase = GetCatDetailsUseCase(repository)
@@ -28,7 +28,7 @@ class GetCatDetailsDomainModelUseCaseDomainModelEntity {
 
         every { repository.getCatDetails(catId) } returns Single.just(catDetailsDomainModelMock)
 
-        useCase.getCatDetails(catId)
+        useCase(catId)
             .test()
             .assertResult(catDetailsDomainModelMock)
     }

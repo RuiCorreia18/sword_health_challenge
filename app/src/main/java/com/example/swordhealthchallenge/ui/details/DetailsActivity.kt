@@ -68,8 +68,4 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

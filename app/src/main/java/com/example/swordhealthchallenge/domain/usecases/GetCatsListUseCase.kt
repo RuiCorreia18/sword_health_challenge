@@ -7,11 +7,11 @@ import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class GetCatListUseCase @Inject constructor(
+class GetCatsListUseCase @Inject constructor(
     private val repository: CatRepository,
     private val localRepository: CatLocalRepository
 ) {
-    fun getCatList(): Single<List<CatDomainModel>> {
+    operator fun invoke(): Single<List<CatDomainModel>> {
         return repository.getCatList()
             .flatMap { cats ->
                 localRepository.saveCats(cats)
