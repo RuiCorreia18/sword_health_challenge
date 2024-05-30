@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
-import com.example.swordhealthchallenge.ui.utils.CatDetailsDomainModelFakes.catDetailsFav1
-import com.example.swordhealthchallenge.ui.utils.CatDetailsDomainModelFakes.catDetailsNoFav1
+import com.example.swordhealthchallenge.ui.utils.CatDetailsDomainModelFakes.catDetailsDomainModelFav1
+import com.example.swordhealthchallenge.ui.utils.CatDetailsDomainModelFakes.catDetailsDomainModelNoFav1
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
@@ -35,7 +35,7 @@ class DetailsViewModelTest {
 
     @Test
     fun `when getCatDetails success should fill livedata`() {
-        val expected = catDetailsNoFav1
+        val expected = catDetailsDomainModelNoFav1
 
         every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)
         viewModel.getCatDetails("1", "URL1", "")
@@ -47,7 +47,7 @@ class DetailsViewModelTest {
     fun `when favouriteCat success should update livedata`() {
         val favId = "FavId1"
         val imageId = "ImageId1"
-        val expected = catDetailsFav1
+        val expected = catDetailsDomainModelFav1
 
         every { postFavouriteCatUseCase.postFavouriteCat(imageId) } returns Single.just(favId)
         every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)
@@ -62,7 +62,7 @@ class DetailsViewModelTest {
     fun `when deleteFavouriteCat success should update livedata`() {
         val favId = "FavId1"
         val imageId = "ImageId1"
-        val expected = catDetailsNoFav1
+        val expected = catDetailsDomainModelNoFav1
 
         every { deleteFavouriteCatUseCase.deleteFavouriteCat(imageId) } returns Completable.complete()
         every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)

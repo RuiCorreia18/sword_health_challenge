@@ -1,7 +1,7 @@
 package com.example.swordhealthchallenge.ui.favourites
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.swordhealthchallenge.domain.model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favCat1
@@ -62,7 +62,7 @@ class FavouritesViewModelTest {
         assertEquals(expected, viewModel.favouriteCatsList.value)
     }
 
-    private fun fillFavouriteCatsListLiveData(fakeFavouriteList: List<FavouriteInfo>) {
+    private fun fillFavouriteCatsListLiveData(fakeFavouriteList: List<FavouriteInfoDomainModel>) {
         every { getCatListUseCase.getFavouriteCats() } returns Single.just(fakeFavouriteList)
         every { getCatListUseCase.getCatByImageId(favInfo1.imageId) } returns Single.just(favCat1)
 

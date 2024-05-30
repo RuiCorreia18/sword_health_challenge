@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.ActivityDetailsBinding
-import com.example.swordhealthchallenge.domain.model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 import javax.inject.Inject
 
 class DetailsActivity : AppCompatActivity() {
@@ -46,7 +46,7 @@ class DetailsActivity : AppCompatActivity() {
         viewModel.getCatDetails(catId, catImageUrl, catFavouriteId)
     }
 
-    private fun updateDetails(cat: CatDetails) {
+    private fun updateDetails(cat: CatDetailsDomainModel) {
         with(binding) {
             Glide.with(applicationContext).load(cat.imageUrl).into(catImageView)
             catBreedTextView.text = cat.breed

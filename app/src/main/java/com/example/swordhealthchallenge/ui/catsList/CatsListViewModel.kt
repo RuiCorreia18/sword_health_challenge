@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.swordhealthchallenge.domain.model.Cat
+import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
@@ -22,11 +22,11 @@ class CatsListViewModel @Inject constructor(
     @Named("io") private val ioSchedulers: Scheduler,
     @Named("main") private val mainSchedulers: Scheduler,
 ) : ViewModel() {
-    private val _catsList = MutableLiveData<List<Cat>>(emptyList())
-    val catsList: LiveData<List<Cat>>
+    private val _catsList = MutableLiveData<List<CatDomainModel>>(emptyList())
+    val catsList: LiveData<List<CatDomainModel>>
         get() = _catsList
 
-    private val tempCatsList = mutableListOf<Cat>()
+    private val tempCatsList = mutableListOf<CatDomainModel>()
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>

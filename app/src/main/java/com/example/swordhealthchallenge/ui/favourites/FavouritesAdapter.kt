@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.R
 import com.example.swordhealthchallenge.databinding.FavouriteItemBinding
-import com.example.swordhealthchallenge.domain.model.FavouriteCat
+import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
 
 class FavouritesAdapter(
     private val onCardClick: (String, String, String) -> (Unit),
     private val onFavouriteClick: (String) -> Unit = {},
 ) : RecyclerView.Adapter<FavouritesAdapter.FavouritesListViewHolder>() {
 
-    private var favouritesList = emptyList<FavouriteCat>()
+    private var favouritesList = emptyList<FavouriteCatDomainModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouritesListViewHolder {
         val itemBinding = FavouriteItemBinding.inflate(
@@ -31,7 +31,7 @@ class FavouritesAdapter(
 
     override fun getItemCount(): Int = favouritesList.size
 
-    fun updateCatsList(cats: List<FavouriteCat>) {
+    fun updateCatsList(cats: List<FavouriteCatDomainModel>) {
         favouritesList = cats
         notifyDataSetChanged()
     }
@@ -41,7 +41,7 @@ class FavouritesAdapter(
         private val binding: FavouriteItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cat: FavouriteCat) {
+        fun bind(cat: FavouriteCatDomainModel) {
             with(binding) {
                 catBreedTextView.text = cat.breed
                 catLifespanTextView.text =

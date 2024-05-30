@@ -1,6 +1,7 @@
 package com.example.swordhealthchallenge.di
 
-import android.content.Context
+import android.app.Application
+import com.example.swordhealthchallenge.MainApplication
 import com.example.swordhealthchallenge.di.viewModel.ViewModelModule
 import com.example.swordhealthchallenge.ui.catsList.CatsListFragment
 import com.example.swordhealthchallenge.ui.details.DetailsActivity
@@ -13,16 +14,18 @@ import javax.inject.Singleton
     modules = [
         ViewModelModule::class,
         AppModule::class,
+        AppBindModule::class
     ]
 )
 @Singleton
 interface AppComponent {
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+        fun create(@BindsInstance app: Application): AppComponent
     }
 
     fun inject(frag: CatsListFragment)
     fun inject(frag: FavouritesFragment)
     fun inject(activity: DetailsActivity)
+    fun inject(app: MainApplication)
 }

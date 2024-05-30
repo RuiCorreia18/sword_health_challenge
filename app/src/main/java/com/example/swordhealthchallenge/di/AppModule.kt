@@ -1,7 +1,15 @@
 package com.example.swordhealthchallenge.di
 
+import android.app.Application
+import androidx.room.Room
 import com.example.swordhealthchallenge.BuildConfig
+import com.example.swordhealthchallenge.data.AppDatabase
 import com.example.swordhealthchallenge.data.CatApi
+import com.example.swordhealthchallenge.data.CatDao
+import com.example.swordhealthchallenge.data.CatRepositoryImpl
+import com.example.swordhealthchallenge.domain.CatLocalRepository
+import com.example.swordhealthchallenge.domain.CatRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -51,4 +59,28 @@ class AppModule {
     @Provides
     @Named("main")
     fun provideMainScheduler(): Scheduler = AndroidSchedulers.mainThread()
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(application: Application): AppDatabase {
+        return Room.databaseBuilder(
+            application.applicationContext,
+            AppDatabase::class.java,
+            "cat-database"
+        ).build()
+    }
+
+    @Provides
+    fun provideCatDao(appDatabase: AppDatabase): CatDao {
+        return appDatabase.catDao()
+    }
+}
+
+@Module
+abstract class AppBindModule {
+    @Binds
+    abstract fun bindRepository(repositoryImpl: CatRepositoryImpl): CatRepository
+
+    @Binds
+    abstract fun bindLocalRepository(repositoryImpl: CatRepositoryImpl): CatLocalRepository
 }

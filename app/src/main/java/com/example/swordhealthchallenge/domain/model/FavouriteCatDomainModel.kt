@@ -1,6 +1,6 @@
 package com.example.swordhealthchallenge.domain.model
 
-data class FavouriteCat(
+data class FavouriteCatDomainModel(
     val id: String = "",
     var favouriteId: String = "",
     val breed: String = "",
@@ -9,7 +9,7 @@ data class FavouriteCat(
     val lifeSpan: String = "",
 )
 
-data class FavouriteInfo(
+data class FavouriteInfoDomainModel(
     val favouriteId: String = "",
     val imageId: String = "",
 )

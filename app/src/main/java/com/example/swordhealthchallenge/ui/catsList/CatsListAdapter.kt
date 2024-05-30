@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.databinding.CatListItemBinding
-import com.example.swordhealthchallenge.domain.model.Cat
+import com.example.swordhealthchallenge.domain.model.CatDomainModel
 
 class CatsListAdapter(
     private val postFavouriteCat: (String) -> Unit = {},
@@ -14,7 +14,7 @@ class CatsListAdapter(
     private val onCardClick: (String, String, String) -> (Unit)
 ) : RecyclerView.Adapter<CatsListAdapter.CatsListViewHolder>() {
 
-    private var catsList = emptyList<Cat>()
+    private var catsList = emptyList<CatDomainModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
         val itemBinding = CatListItemBinding.inflate(
@@ -32,8 +32,8 @@ class CatsListAdapter(
 
     override fun getItemCount(): Int = catsList.size
 
-    fun updateCatsList(cats: List<Cat>) {
-        catsList = cats
+    fun updateCatsList(catDomainModels: List<CatDomainModel>) {
+        catsList = catDomainModels
         notifyDataSetChanged()
     }
 
@@ -41,11 +41,11 @@ class CatsListAdapter(
         private val binding: CatListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cat: Cat) {
+        fun bind(catDomainModel: CatDomainModel) {
             with(binding) {
-                catBreedTextView.text = cat.breed
-                Glide.with(root.context).load(cat.imageUrl).into(catImageView)
-                if (cat.favouriteId.isNotEmpty()) {
+                catBreedTextView.text = catDomainModel.breed
+                Glide.with(root.context).load(catDomainModel.imageUrl).into(catImageView)
+                if (catDomainModel.favouriteId.isNotEmpty()) {
                     catFavouriteImageView.setColorFilter(Color.GREEN)
                 } else {
                     catFavouriteImageView.setColorFilter(Color.BLACK)
@@ -53,15 +53,15 @@ class CatsListAdapter(
             }
 
             binding.catFavouriteImageView.setOnClickListener {
-                if (cat.favouriteId.isEmpty()) {
-                    postFavouriteCat.invoke(cat.imageId)
+                if (catDomainModel.favouriteId.isEmpty()) {
+                    postFavouriteCat.invoke(catDomainModel.imageId)
                 } else {
-                    deleteFavouriteCat.invoke(cat.favouriteId)
+                    deleteFavouriteCat.invoke(catDomainModel.favouriteId)
                 }
             }
 
             binding.catItem.setOnClickListener {
-                onCardClick.invoke(cat.id, cat.imageUrl, cat.favouriteId)
+                onCardClick.invoke(catDomainModel.id, catDomainModel.imageUrl, catDomainModel.favouriteId)
             }
         }
     }

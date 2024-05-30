@@ -2,8 +2,6 @@ package com.example.swordhealthchallenge.di.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.swordhealthchallenge.data.CatRepositoryImpl
-import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.ui.catsList.CatsListViewModel
 import com.example.swordhealthchallenge.ui.details.DetailsViewModel
 import com.example.swordhealthchallenge.ui.favourites.FavouritesViewModel
@@ -31,6 +29,4 @@ abstract class ViewModelModule {
     @ViewModelKey(DetailsViewModel::class)
     abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 
-    @Binds
-    abstract fun bindRepository(repositoryImpl: CatRepositoryImpl): CatRepository
 }

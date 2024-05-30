@@ -78,6 +78,11 @@ dependencies {
     ksp(libs.glide.compiler)
     implementation(libs.glide)
 
+    // Room
+    ksp("androidx.room:room-compiler:2.4.0")
+    implementation("androidx.room:room-runtime:2.4.0")
+    implementation("androidx.room:room-rxjava3:2.4.0")
+
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.androidx.core.testing)

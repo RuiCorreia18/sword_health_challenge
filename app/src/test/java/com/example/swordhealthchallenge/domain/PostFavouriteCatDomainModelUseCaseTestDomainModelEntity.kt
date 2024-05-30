@@ -6,7 +6,7 @@ import io.mockk.mockk
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class PostFavouriteCatUseCaseTest {
+class PostFavouriteCatDomainModelUseCaseTestDomainModelEntity {
 
     private val repository: CatRepository = mockk()
     private val useCase = PostFavouriteCatUseCase(repository)

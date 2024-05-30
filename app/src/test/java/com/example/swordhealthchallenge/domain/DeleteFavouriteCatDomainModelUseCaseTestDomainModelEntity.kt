@@ -6,7 +6,7 @@ import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
 import org.junit.Test
 
-class DeleteFavouriteCatUseCaseTest {
+class DeleteFavouriteCatDomainModelUseCaseTestDomainModelEntity {
 
     private val repository: CatRepository = mockk()
     private val useCase = DeleteFavouriteCatUseCase(repository)

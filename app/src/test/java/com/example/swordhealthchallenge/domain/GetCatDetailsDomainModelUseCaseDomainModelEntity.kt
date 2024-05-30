@@ -1,13 +1,13 @@
 package com.example.swordhealthchallenge.domain
 
-import com.example.swordhealthchallenge.domain.model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class GetCatDetailsUseCase {
+class GetCatDetailsDomainModelUseCaseDomainModelEntity {
 
     private val repository: CatRepository = mockk()
     private val useCase = GetCatDetailsUseCase(repository)
@@ -15,7 +15,7 @@ class GetCatDetailsUseCase {
     @Test
     fun `when getCatDetails is success should return CatDetails`() {
         val catId = "CatId1"
-        val catDetailsMock = CatDetails(
+        val catDetailsDomainModelMock = CatDetailsDomainModel(
             id = catId,
             breed = "Breed1",
             imageUrl = "URL1",
@@ -26,10 +26,10 @@ class GetCatDetailsUseCase {
             description = "Descrition",
         )
 
-        every { repository.getCatDetails(catId) } returns Single.just(catDetailsMock)
+        every { repository.getCatDetails(catId) } returns Single.just(catDetailsDomainModelMock)
 
         useCase.getCatDetails(catId)
             .test()
-            .assertResult(catDetailsMock)
+            .assertResult(catDetailsDomainModelMock)
     }
 }

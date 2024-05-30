@@ -4,14 +4,14 @@ import com.example.swordhealthchallenge.data.entities.CatByImageResponse
 import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
 import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
-import com.example.swordhealthchallenge.domain.model.Cat
-import com.example.swordhealthchallenge.domain.model.CatDetails
-import com.example.swordhealthchallenge.domain.model.FavouriteCat
-import com.example.swordhealthchallenge.domain.model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
+import com.example.swordhealthchallenge.domain.model.CatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 
-fun List<CatResponse>.toDomainList(): List<Cat> {
+fun List<CatResponse>.toDomainList(): List<CatDomainModel> {
     return this.map {
-        Cat(
+        CatDomainModel(
             id = it.id,
             breed = it.name,
             imageUrl = it.image.url,
@@ -20,8 +20,8 @@ fun List<CatResponse>.toDomainList(): List<Cat> {
     }
 }
 
-fun CatByImageResponse.toDomainModel(): FavouriteCat {
-    return FavouriteCat(
+fun CatByImageResponse.toDomainModel(): FavouriteCatDomainModel {
+    return FavouriteCatDomainModel(
         id = this.breeds.first().id,
         breed = this.breeds.first().name,
         imageUrl = this.url,
@@ -30,8 +30,8 @@ fun CatByImageResponse.toDomainModel(): FavouriteCat {
     )
 }
 
-fun CatDetailsResponse.toDomainModel(): CatDetails {
-    return CatDetails(
+fun CatDetailsResponse.toDomainModel(): CatDetailsDomainModel {
+    return CatDetailsDomainModel(
         id = this.id,
         breed = this.breed,
         imageId = this.imageId,
@@ -41,9 +41,9 @@ fun CatDetailsResponse.toDomainModel(): CatDetails {
     )
 }
 
-fun List<FavouriteCatResponse>.toDomainModelList(): List<FavouriteInfo> {
+fun List<FavouriteCatResponse>.toDomainModelList(): List<FavouriteInfoDomainModel> {
     return this.map {
-        FavouriteInfo(
+        FavouriteInfoDomainModel(
             favouriteId = it.id,
             imageId = it.image_id,
         )

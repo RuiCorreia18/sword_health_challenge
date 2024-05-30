@@ -1,6 +1,6 @@
 package com.example.swordhealthchallenge.domain.model
 
-data class CatDetails(
+data class CatDetailsDomainModel(
     val id: String,
     val breed: String,
     var imageUrl: String = "",

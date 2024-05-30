@@ -8,32 +8,33 @@ import com.example.swordhealthchallenge.data.entities.CatResponse
 import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
 import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
 import com.example.swordhealthchallenge.data.entities.PostFavouriteResponse
-import com.example.swordhealthchallenge.domain.model.Cat
-import com.example.swordhealthchallenge.domain.model.CatDetails
-import com.example.swordhealthchallenge.domain.model.FavouriteCat
-import com.example.swordhealthchallenge.domain.model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
+import com.example.swordhealthchallenge.domain.model.CatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import org.junit.Test
 
-class CatRepositoryImplTest {
+class CatEntityDomainModelRepositoryImplTest {
 
     private val remoteDataSource: RemoteDataSource = mockk()
-    private val repository = CatRepositoryImpl(remoteDataSource)
+    private val localDataSource: LocalDataSource = mockk()
+    private val repository = CatRepositoryImpl(remoteDataSource, localDataSource)
 
     @Test
     fun `should return list of Cat if getCatList is success`() {
-        val catListMock = listOf(
-            Cat(
+        val catDomainModelListMocks = listOf(
+            CatDomainModel(
                 id = "CatId1",
                 breed = "Breed1",
                 imageUrl = "URL1",
                 imageId = "ImageId1",
                 favouriteId = ""
             ),
-            Cat(
+            CatDomainModel(
                 id = "CatId2",
                 breed = "Breed2",
                 imageUrl = "URL2",
@@ -65,21 +66,21 @@ class CatRepositoryImplTest {
 
         repository.getCatList()
             .test()
-            .assertResult(catListMock)
+            .assertResult(catDomainModelListMocks)
     }
 
     @Test
     fun `should return list of Cat if searchCat is success`() {
         val searchText = "bree"
-        val catListMock = listOf(
-            Cat(
+        val catDomainModelListMocks = listOf(
+            CatDomainModel(
                 id = "CatId1",
                 breed = "Breed1",
                 imageUrl = "URL1",
                 imageId = "ImageId1",
                 favouriteId = ""
             ),
-            Cat(
+            CatDomainModel(
                 id = "CatId2",
                 breed = "Breed2",
                 imageUrl = "URL2",
@@ -111,7 +112,7 @@ class CatRepositoryImplTest {
 
         repository.searchCat(searchText)
             .test()
-            .assertResult(catListMock)
+            .assertResult(catDomainModelListMocks)
     }
 
     @Test
@@ -142,11 +143,11 @@ class CatRepositoryImplTest {
         )
 
         val favInfoListMock = listOf(
-            FavouriteInfo(
+            FavouriteInfoDomainModel(
                 favouriteId = "1",
                 imageId = "ImageId1"
             ),
-            FavouriteInfo(
+            FavouriteInfoDomainModel(
                 favouriteId = "2",
                 imageId = "ImageId2"
             ),
@@ -174,7 +175,7 @@ class CatRepositoryImplTest {
             url = "ImageUrl"
         )
 
-        val favCatMock = FavouriteCat(
+        val favCatMock = FavouriteCatDomainModel(
             id = "1",
             favouriteId = "",
             breed = "Breed1",
@@ -202,7 +203,7 @@ class CatRepositoryImplTest {
             imageId = "ImageId1"
         )
 
-        val catDetailsMock = CatDetails(
+        val catDetailsDomainModelMock = CatDetailsDomainModel(
             id = catId,
             breed = "Breed1",
             imageId = "ImageId1",
@@ -215,7 +216,7 @@ class CatRepositoryImplTest {
 
         repository.getCatDetails(catId)
             .test()
-            .assertResult(catDetailsMock)
+            .assertResult(catDetailsDomainModelMock)
     }
 
     @Test

@@ -1,17 +1,17 @@
 package com.example.swordhealthchallenge.ui.utils
 
-import com.example.swordhealthchallenge.domain.model.Cat
+import com.example.swordhealthchallenge.domain.model.CatDomainModel
 
 object CatDomainModelFakes {
 
-    val catNoFav = Cat(
+    val catDomainModelNoFav = CatDomainModel(
         id = "CatId1",
         breed = "Breed1",
         imageUrl = "URL1",
         imageId = "ImageId1",
         favouriteId = ""
     )
-    val catFav = Cat(
+    val catDomainModelFav = CatDomainModel(
         id = "CatId1",
         breed = "Breed1",
         imageUrl = "URL1",

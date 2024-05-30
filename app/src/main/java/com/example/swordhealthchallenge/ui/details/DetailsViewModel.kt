@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.swordhealthchallenge.domain.model.CatDetails
+import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
@@ -23,8 +23,8 @@ class DetailsViewModel @Inject constructor(
     @Named("main") private val mainSchedulers: Scheduler,
 ) : ViewModel() {
 
-    private val _catDetails = MutableLiveData<CatDetails>()
-    val catDetails: LiveData<CatDetails>
+    private val _catDetails = MutableLiveData<CatDetailsDomainModel>()
+    val catDetails: LiveData<CatDetailsDomainModel>
         get() = _catDetails
 
     private val _errorMessage = MutableLiveData<String>()

@@ -1,17 +1,28 @@
 package com.example.swordhealthchallenge.domain.usecases
 
+import com.example.swordhealthchallenge.domain.CatLocalRepository
 import com.example.swordhealthchallenge.domain.CatRepository
-import com.example.swordhealthchallenge.domain.model.Cat
-import com.example.swordhealthchallenge.domain.model.FavouriteCat
-import com.example.swordhealthchallenge.domain.model.FavouriteInfo
+import com.example.swordhealthchallenge.domain.model.CatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class GetCatListUseCase @Inject constructor(
-    private val repository: CatRepository
+    private val repository: CatRepository,
+    private val localRepository: CatLocalRepository
 ) {
-    fun getCatList(): Single<List<Cat>> = repository.getCatList()
-    fun searchCat(search: String): Single<List<Cat>> = repository.searchCat(search)
-    fun getFavouriteCats(): Single<List<FavouriteInfo>> = repository.getFavouriteCats()
-    fun getCatByImageId(imageId: String): Single<FavouriteCat> = repository.getCatByImageId(imageId)
+    fun getCatList(): Single<List<CatDomainModel>> {
+        return repository.getCatList()
+            .flatMap { cats ->
+                localRepository.saveCats(cats)
+                    .andThen(Single.just(cats))
+            }
+    }
+
+    fun searchCat(search: String): Single<List<CatDomainModel>> = repository.searchCat(search)
+    fun getFavouriteCats(): Single<List<FavouriteInfoDomainModel>> = repository.getFavouriteCats()
+    fun getCatByImageId(imageId: String): Single<FavouriteCatDomainModel> =
+        repository.getCatByImageId(imageId)
 }
+
