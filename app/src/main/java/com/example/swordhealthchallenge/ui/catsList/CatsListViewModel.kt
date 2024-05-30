@@ -8,6 +8,7 @@ import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
+import com.example.swordhealthchallenge.domain.usecases.SearchCatsUseCase
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -19,6 +20,7 @@ class CatsListViewModel @Inject constructor(
     private val getCatListUseCase: GetCatListUseCase,
     private val postFavouriteCatUseCase: PostFavouriteCatUseCase,
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
+    private val searchCatsUseCase: SearchCatsUseCase,
     @Named("io") private val ioSchedulers: Scheduler,
     @Named("main") private val mainSchedulers: Scheduler,
 ) : ViewModel() {
@@ -52,7 +54,7 @@ class CatsListViewModel @Inject constructor(
     }
 
     fun searchCats(catSearch: String) {
-        getCatListUseCase.searchCat(catSearch)
+        searchCatsUseCase(catSearch)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(

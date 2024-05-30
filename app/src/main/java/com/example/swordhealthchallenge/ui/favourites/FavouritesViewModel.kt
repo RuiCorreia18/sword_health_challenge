@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
+import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel.Companion.emptyFavouriteCatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
-import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetFavouriteCatsUseCase
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
@@ -18,7 +18,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class FavouritesViewModel @Inject constructor(
-    private val getCatListUseCase: GetCatListUseCase,
     private val getFavouriteCatsUseCase: GetFavouriteCatsUseCase,
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
     @Named("io") private val ioSchedulers: Scheduler,
@@ -40,7 +39,7 @@ class FavouritesViewModel @Inject constructor(
             .subscribeOn(ioSchedulers)
             .flattenAsObservable { infoList -> infoList }
             .flatMapSingle { info -> fetchCatByImageId(info) }
-            .filter { it != FavouriteCatDomainModel() }
+            .filter { it != emptyFavouriteCatDomainModel() }
             .toList()
             .observeOn(mainSchedulers)
             .subscribeBy(
@@ -59,11 +58,11 @@ class FavouritesViewModel @Inject constructor(
     }
 
     private fun fetchCatByImageId(info: FavouriteInfoDomainModel) =
-        getCatListUseCase.getCatByImageId(info.imageId)
+        getFavouriteCatsUseCase.getCatByImageId(info.imageId)
             .onErrorResumeNext { throwable ->
                 Log.e("ERROR CAT API IMAGE", "url:${info.imageId} $throwable")
                 // Added since i messed with api on postman i created some wrong data
-                Single.just(FavouriteCatDomainModel())
+                Single.just(emptyFavouriteCatDomainModel())
             }
             .map { cat ->
                 if (cat.imageUrl.isNotEmpty()) cat.copy(favouriteId = info.favouriteId) else cat
