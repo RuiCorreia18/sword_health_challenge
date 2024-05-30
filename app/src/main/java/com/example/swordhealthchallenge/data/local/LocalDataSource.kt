@@ -2,6 +2,7 @@ package com.example.swordhealthchallenge.data.local
 
 import com.example.swordhealthchallenge.data.local.entity.CatEntity
 import com.example.swordhealthchallenge.data.remote.model.CatResponse
+import com.example.swordhealthchallenge.data.toEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -10,9 +11,7 @@ class LocalDataSource @Inject constructor(
     private val catDao: CatDao
 ) {
 
-    fun getAllCats(): Single<List<CatEntity>> {
-        return catDao.getAllCats()
-    }
+    fun getAllCats(): Single<List<CatEntity>> = catDao.getAllCats()
 
     fun saveCats(catsList: List<CatResponse>): Completable {
         return Completable.fromAction {
@@ -57,6 +56,19 @@ class LocalDataSource @Inject constructor(
             description = cat.description
         )
     }
+
+    fun setFavouriteCat(imageId: String, favouriteId: String): Completable {
+        return Completable.fromAction {
+            catDao.setFavouriteCat(imageId, favouriteId)
+        }
+    }
+
+    fun deleteFavouriteCat(favouriteId: String): Completable {
+        return Completable.fromAction {
+            catDao.deleteFavouriteCat(favouriteId)
+        }
+    }
 }
+
 
 

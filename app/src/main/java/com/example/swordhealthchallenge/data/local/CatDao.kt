@@ -17,13 +17,13 @@ interface CatDao {
 
     @Query(
         "UPDATE cats SET " +
-            "breed = :breed," +
-            " imageUrl = :imageUrl," +
-            " imageId = :imageId," +
-            " origin = :origin," +
-            " temperament = :temperament," +
-            " description = :description" +
-            " WHERE id = :id"
+                "breed = :breed," +
+                " imageUrl = :imageUrl," +
+                " imageId = :imageId," +
+                " origin = :origin," +
+                " temperament = :temperament," +
+                " description = :description" +
+                " WHERE id = :id"
     )
     fun updateCatInfo(
         id: String,
@@ -34,4 +34,10 @@ interface CatDao {
         temperament: String,
         description: String,
     )
+
+    @Query("UPDATE cats SET favouriteId = :favouriteId WHERE imageId = :imageId")
+    fun setFavouriteCat(imageId: String, favouriteId: String)
+
+    @Query("UPDATE cats SET favouriteId = \"\" WHERE favouriteId = :favouriteId")
+    fun deleteFavouriteCat(favouriteId: String)
 }
