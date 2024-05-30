@@ -1,5 +1,3 @@
-# sword_health_cats
-
 # Cat API Android App
 
 ## Overview
