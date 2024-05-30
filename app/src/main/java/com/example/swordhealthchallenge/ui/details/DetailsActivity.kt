@@ -32,12 +32,7 @@ class DetailsActivity : AppCompatActivity() {
 
         _binding = ActivityDetailsBinding.bind(findViewById(R.id.activityDetailsLayout))
 
-        viewModel.catDetails.observe(this) { catDetails ->
-            updateDetails(catDetails)
-        }
-        viewModel.errorMessage.observe(this) { errorMessage ->
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-        }
+        observeLiveData()
 
         val catId = intent.getStringExtra("catId").orEmpty()
         val catImageUrl = intent.getStringExtra("catImageUrl").orEmpty()
@@ -46,25 +41,43 @@ class DetailsActivity : AppCompatActivity() {
         viewModel.getCatDetails(catId, catImageUrl, catFavouriteId)
     }
 
+    private fun observeLiveData() {
+        viewModel.catDetails.observe(this) { catDetails ->
+            updateDetails(catDetails)
+        }
+        viewModel.errorMessage.observe(this) { errorMessage ->
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun updateDetails(cat: CatDetailsDomainModel) {
         with(binding) {
-            Glide.with(applicationContext).load(cat.imageUrl).into(catImageView)
             catBreedTextView.text = cat.breed
             catOriginTextView.text = getString(R.string.cat_origin, cat.origin)
             catTemperamentTextView.text = getString(R.string.cat_temperament, cat.temperament)
             catDescriptionTextView.text = getString(R.string.cat_description, cat.description)
-            if (cat.favouriteId.isNotEmpty()) {
-                catFavouriteImageView.setColorFilter(Color.GREEN)
-            } else {
-                catFavouriteImageView.setColorFilter(Color.BLACK)
-            }
 
-            catFavouriteImageView.setOnClickListener {
-                if (cat.favouriteId.isEmpty()) {
-                    viewModel.favouriteCat(cat.imageId)
-                } else {
-                    viewModel.deleteFavouriteCat(cat.favouriteId)
-                }
+            Glide.with(applicationContext).load(cat.imageUrl).into(catImageView)
+            favouriteImageViewColorPick(cat)
+        }
+
+        favouriteImageViewClickListener(cat)
+    }
+
+    private fun ActivityDetailsBinding.favouriteImageViewColorPick(cat: CatDetailsDomainModel) {
+        if (cat.favouriteId.isNotEmpty()) {
+            catFavouriteImageView.setColorFilter(Color.GREEN)
+        } else {
+            catFavouriteImageView.setColorFilter(Color.BLACK)
+        }
+    }
+
+    private fun favouriteImageViewClickListener(cat: CatDetailsDomainModel) {
+        binding.catFavouriteImageView.setOnClickListener {
+            if (cat.favouriteId.isEmpty()) {
+                viewModel.favouriteCat(cat.imageId)
+            } else {
+                viewModel.deleteFavouriteCat(cat.favouriteId)
             }
         }
     }

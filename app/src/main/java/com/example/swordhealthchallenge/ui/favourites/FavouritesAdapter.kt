@@ -1,7 +1,6 @@
 package com.example.swordhealthchallenge.ui.favourites
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -47,20 +46,29 @@ class FavouritesAdapter(
                 catLifespanTextView.text =
                     root.context.getString(R.string.cat_lifespan, cat.lifeSpan)
                 Glide.with(root.context).load(cat.imageUrl).into(catImageView)
-                if (cat.favouriteId.isNotEmpty()) {
-                    catFavouriteImageView.setColorFilter(Color.GREEN)
-                } else {
-                    catFavouriteImageView.setColorFilter(Color.BLACK)
-                }
+                favouriteImageViewColorPick(cat)
             }
 
+            favouriteImageViewClickListener(cat)
+            catCardClickListener(cat)
+        }
+
+        private fun FavouriteItemBinding.favouriteImageViewColorPick(cat: FavouriteCatDomainModel) {
+            if (cat.favouriteId.isNotEmpty()) {
+                catFavouriteImageView.setColorFilter(Color.GREEN)
+            } else {
+                catFavouriteImageView.setColorFilter(Color.BLACK)
+            }
+        }
+
+        private fun favouriteImageViewClickListener(cat: FavouriteCatDomainModel) {
             binding.catFavouriteImageView.setOnClickListener {
                 onFavouriteClick.invoke(cat.favouriteId)
             }
+        }
 
-
+        private fun catCardClickListener(cat: FavouriteCatDomainModel) {
             binding.catItem.setOnClickListener {
-                Log.e("CLICK CAT FAV CARD", cat.id)
                 onCardClick.invoke(cat.id, cat.imageUrl, cat.favouriteId)
             }
         }

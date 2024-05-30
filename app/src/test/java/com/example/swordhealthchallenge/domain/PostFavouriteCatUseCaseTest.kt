@@ -19,7 +19,7 @@ class PostFavouriteCatUseCaseTest {
         val favId = "Favid"
 
         every { repository.postFavouriteCat(imageId) } returns Single.just(favId)
-        every { localRepository.setFavouriteCat(any(),any()) } returns Completable.complete()
+        every { localRepository.setFavouriteCat(any(), any()) } returns Completable.complete()
 
         useCase(imageId)
             .test()

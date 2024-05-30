@@ -45,13 +45,22 @@ class CatsListAdapter(
             with(binding) {
                 catBreedTextView.text = catDomainModel.breed
                 Glide.with(root.context).load(catDomainModel.imageUrl).into(catImageView)
-                if (catDomainModel.favouriteId.isNotEmpty()) {
-                    catFavouriteImageView.setColorFilter(Color.GREEN)
-                } else {
-                    catFavouriteImageView.setColorFilter(Color.BLACK)
-                }
+                favouriteImageViewColorPick(catDomainModel)
             }
 
+            favouriteImageViewClickListener(catDomainModel)
+            catCardClickListener(catDomainModel)
+        }
+
+        private fun CatListItemBinding.favouriteImageViewColorPick(catDomainModel: CatDomainModel) {
+            if (catDomainModel.favouriteId.isNotEmpty()) {
+                catFavouriteImageView.setColorFilter(Color.GREEN)
+            } else {
+                catFavouriteImageView.setColorFilter(Color.BLACK)
+            }
+        }
+
+        private fun favouriteImageViewClickListener(catDomainModel: CatDomainModel) {
             binding.catFavouriteImageView.setOnClickListener {
                 if (catDomainModel.favouriteId.isEmpty()) {
                     postFavouriteCat.invoke(catDomainModel.imageId)
@@ -59,9 +68,15 @@ class CatsListAdapter(
                     deleteFavouriteCat.invoke(catDomainModel.favouriteId)
                 }
             }
+        }
 
+        private fun catCardClickListener(catDomainModel: CatDomainModel) {
             binding.catItem.setOnClickListener {
-                onCardClick.invoke(catDomainModel.id, catDomainModel.imageUrl, catDomainModel.favouriteId)
+                onCardClick.invoke(
+                    catDomainModel.id,
+                    catDomainModel.imageUrl,
+                    catDomainModel.favouriteId
+                )
             }
         }
     }
