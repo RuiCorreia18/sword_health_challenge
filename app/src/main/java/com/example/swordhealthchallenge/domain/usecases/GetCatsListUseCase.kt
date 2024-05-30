@@ -1,5 +1,6 @@
 package com.example.swordhealthchallenge.domain.usecases
 
+import com.example.swordhealthchallenge.data.toDomainList
 import com.example.swordhealthchallenge.domain.CatLocalRepository
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.model.CatDomainModel
@@ -16,7 +17,7 @@ class GetCatListUseCase @Inject constructor(
         return repository.getCatList()
             .flatMap { cats ->
                 localRepository.saveCats(cats)
-                    .andThen(Single.just(cats))
+                    .andThen(Single.just(cats.toDomainList()))
             }
     }
 
@@ -25,4 +26,3 @@ class GetCatListUseCase @Inject constructor(
     fun getCatByImageId(imageId: String): Single<FavouriteCatDomainModel> =
         repository.getCatByImageId(imageId)
 }
-

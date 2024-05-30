@@ -1,11 +1,11 @@
-package com.example.swordhealthchallenge.data
+package com.example.swordhealthchallenge.data.remote
 
-import com.example.swordhealthchallenge.data.entities.CatByImageResponse
-import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
-import com.example.swordhealthchallenge.data.entities.CatResponse
-import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
-import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
-import com.example.swordhealthchallenge.data.entities.PostFavouriteResponse
+import com.example.swordhealthchallenge.data.remote.model.CatByImageResponse
+import com.example.swordhealthchallenge.data.remote.model.CatDetailsResponse
+import com.example.swordhealthchallenge.data.remote.model.CatResponse
+import com.example.swordhealthchallenge.data.remote.model.FavouriteCatBody
+import com.example.swordhealthchallenge.data.remote.model.FavouriteCatResponse
+import com.example.swordhealthchallenge.data.remote.model.PostFavouriteResponse
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body

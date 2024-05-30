@@ -1,8 +1,10 @@
-package com.example.swordhealthchallenge.data
+package com.example.swordhealthchallenge.data.remote
 
-import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
-import com.example.swordhealthchallenge.data.entities.local.CatEntity
-import com.example.swordhealthchallenge.domain.CatLocalRepository
+import com.example.swordhealthchallenge.data.remote.model.CatResponse
+import com.example.swordhealthchallenge.data.remote.model.FavouriteCatBody
+import com.example.swordhealthchallenge.data.toDomainList
+import com.example.swordhealthchallenge.data.toDomainModel
+import com.example.swordhealthchallenge.data.toDomainModelList
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 import com.example.swordhealthchallenge.domain.model.CatDomainModel
@@ -13,15 +15,11 @@ import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class CatRepositoryImpl @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource
-) : CatRepository, CatLocalRepository {
+    private val remoteDataSource: RemoteDataSource
+) : CatRepository {
 
-    override fun getCatList(): Single<List<CatDomainModel>> {
+    override fun getCatList(): Single<List<CatResponse>> {
         return remoteDataSource.getCatList()
-            .map { res ->
-                res.toDomainList()
-            }
     }
 
     override fun searchCat(search: String): Single<List<CatDomainModel>> {
@@ -59,13 +57,5 @@ class CatRepositoryImpl @Inject constructor(
 
     override fun deleteFavouriteCat(favouriteId: String): Completable {
         return remoteDataSource.deleteFavouriteCat(favouriteId)
-    }
-
-    override fun getAllCats(): Single<List<CatEntity>> {
-        return localDataSource.getAllCats()
-    }
-
-    override fun saveCats(catsList: List<CatDomainModel>) : Completable {
-        return localDataSource.saveCats(catsList)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.data.entities.local
+package com.example.swordhealthchallenge.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,5 +9,8 @@ data class CatEntity(
     val breed: String,
     val imageUrl: String,
     val imageId: String,
-    var favouriteId: String = ""
+    var favouriteId: String,
+    val origin: String,
+    val temperament: String,
+    val description: String,
 )

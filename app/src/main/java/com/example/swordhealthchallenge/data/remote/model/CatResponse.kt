@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.data.entities
+package com.example.swordhealthchallenge.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,6 +9,12 @@ data class CatResponse(
     val name: String,
     @SerializedName("image")
     val image: CatImageResponse,
+    @SerializedName("temperament")
+    val temperament: String,
+    @SerializedName("origin")
+    val origin: String,
+    @SerializedName("description")
+    val description: String,
 )
 
 data class CatImageResponse(

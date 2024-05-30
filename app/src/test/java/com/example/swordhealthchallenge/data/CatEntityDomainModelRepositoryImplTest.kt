@@ -1,13 +1,16 @@
 package com.example.swordhealthchallenge.data
 
-import com.example.swordhealthchallenge.data.entities.Breed
-import com.example.swordhealthchallenge.data.entities.CatByImageResponse
-import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
-import com.example.swordhealthchallenge.data.entities.CatImageResponse
-import com.example.swordhealthchallenge.data.entities.CatResponse
-import com.example.swordhealthchallenge.data.entities.FavouriteCatBody
-import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
-import com.example.swordhealthchallenge.data.entities.PostFavouriteResponse
+import com.example.swordhealthchallenge.data.local.LocalDataSource
+import com.example.swordhealthchallenge.data.remote.CatRepositoryImpl
+import com.example.swordhealthchallenge.data.remote.RemoteDataSource
+import com.example.swordhealthchallenge.data.remote.model.Breed
+import com.example.swordhealthchallenge.data.remote.model.CatByImageResponse
+import com.example.swordhealthchallenge.data.remote.model.CatDetailsResponse
+import com.example.swordhealthchallenge.data.remote.model.CatImageResponse
+import com.example.swordhealthchallenge.data.remote.model.CatResponse
+import com.example.swordhealthchallenge.data.remote.model.FavouriteCatBody
+import com.example.swordhealthchallenge.data.remote.model.FavouriteCatResponse
+import com.example.swordhealthchallenge.data.remote.model.PostFavouriteResponse
 import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel

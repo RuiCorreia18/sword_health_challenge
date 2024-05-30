@@ -1,7 +1,7 @@
 package com.example.swordhealthchallenge
 
 import android.app.Application
-import com.example.swordhealthchallenge.data.AppDatabase
+import com.example.swordhealthchallenge.data.local.AppDatabase
 import com.example.swordhealthchallenge.di.AppComponent
 import com.example.swordhealthchallenge.di.DaggerAppComponent
 import javax.inject.Inject

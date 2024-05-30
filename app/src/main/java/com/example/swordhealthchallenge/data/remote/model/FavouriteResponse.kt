@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.data.entities
+package com.example.swordhealthchallenge.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

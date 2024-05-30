@@ -1,9 +1,9 @@
 package com.example.swordhealthchallenge.data
 
-import com.example.swordhealthchallenge.data.entities.CatByImageResponse
-import com.example.swordhealthchallenge.data.entities.CatDetailsResponse
-import com.example.swordhealthchallenge.data.entities.CatResponse
-import com.example.swordhealthchallenge.data.entities.FavouriteCatResponse
+import com.example.swordhealthchallenge.data.remote.model.CatByImageResponse
+import com.example.swordhealthchallenge.data.remote.model.CatDetailsResponse
+import com.example.swordhealthchallenge.data.remote.model.CatResponse
+import com.example.swordhealthchallenge.data.remote.model.FavouriteCatResponse
 import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
