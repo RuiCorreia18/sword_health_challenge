@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
+import com.example.swordhealthchallenge.domain.usecases.GetFavouriteCatsUseCase
 import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favCat1
 import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favCat2
 import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favInfo1
@@ -21,12 +22,14 @@ import org.junit.Test
 class FavouritesViewModelTest {
 
     private val getCatListUseCase: GetCatListUseCase = mockk()
+    private val getFavouriteCatsUseCase: GetFavouriteCatsUseCase = mockk()
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase = mockk()
     private val ioSchedulers: Scheduler = Schedulers.trampoline()
     private val mainSchedulers: Scheduler = Schedulers.trampoline()
 
     private val viewModel = FavouritesViewModel(
         getCatListUseCase,
+        getFavouriteCatsUseCase,
         deleteFavouriteCatUseCase,
         ioSchedulers,
         mainSchedulers
@@ -53,7 +56,7 @@ class FavouritesViewModelTest {
 
         val expected = listOf(favCat2)
 
-        every { deleteFavouriteCatUseCase.deleteFavouriteCat(favId) } returns Completable.complete()
+        every { deleteFavouriteCatUseCase(favId) } returns Completable.complete()
         every { getCatListUseCase.getCatByImageId(favInfo2.imageId) } returns Single.just(favCat2)
         fillFavouriteCatsListLiveData(favListMock)
 
@@ -63,7 +66,7 @@ class FavouritesViewModelTest {
     }
 
     private fun fillFavouriteCatsListLiveData(fakeFavouriteList: List<FavouriteInfoDomainModel>) {
-        every { getCatListUseCase.getFavouriteCats() } returns Single.just(fakeFavouriteList)
+        every { getFavouriteCatsUseCase() } returns Single.just(fakeFavouriteList)
         every { getCatListUseCase.getCatByImageId(favInfo1.imageId) } returns Single.just(favCat1)
 
         viewModel.getFavouriteCats()

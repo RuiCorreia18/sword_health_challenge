@@ -34,7 +34,7 @@ class DetailsViewModel @Inject constructor(
     private val compositeDisposable by lazy { CompositeDisposable() }
 
     fun getCatDetails(catId: String, catImageUrl: String, catFavouriteId: String) {
-        getCatDetailsUseCase.getCatDetails(catId)
+        getCatDetailsUseCase(catId)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(
@@ -52,7 +52,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun favouriteCat(imageId: String) {
-        postFavouriteCatUseCase.postFavouriteCat(imageId)
+        postFavouriteCatUseCase(imageId)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(
@@ -67,7 +67,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun deleteFavouriteCat(favouriteId: String) {
-        deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
+        deleteFavouriteCatUseCase(favouriteId)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(

@@ -9,7 +9,7 @@ class PostFavouriteCatUseCase @Inject constructor(
     private val repository: CatRepository,
     private val localRepository: CatLocalRepository
 ) {
-    fun postFavouriteCat(imageId: String): Single<String> {
+    operator fun invoke(imageId: String): Single<String> {
         return repository.postFavouriteCat(imageId)
             .flatMap { favId ->
                 localRepository.setFavouriteCat(imageId, favId)

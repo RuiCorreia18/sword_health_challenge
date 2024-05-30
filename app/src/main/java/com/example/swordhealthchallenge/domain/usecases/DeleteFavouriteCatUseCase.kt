@@ -9,7 +9,7 @@ class DeleteFavouriteCatUseCase @Inject constructor(
     private val repository: CatRepository,
     private val localRepository: CatLocalRepository
 ) {
-    fun deleteFavouriteCat(favouriteId: String): Completable {
+    operator fun invoke(favouriteId: String): Completable {
         return repository.deleteFavouriteCat(favouriteId).andThen(
             localRepository.deleteFavouriteCat(favouriteId)
         )

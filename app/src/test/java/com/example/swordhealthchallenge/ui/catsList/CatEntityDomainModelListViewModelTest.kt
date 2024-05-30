@@ -65,7 +65,7 @@ class CatEntityDomainModelListViewModelTest {
         val cats = listOf(catDomainModelNoFav)
         val expected = listOf(catDomainModelFav)
 
-        every { postFavouriteCatUseCase.postFavouriteCat(imageId) } returns Single.just(favId)
+        every { postFavouriteCatUseCase(imageId) } returns Single.just(favId)
         addCatsToLiveData(cats)
 
         viewModel.favouriteCat(imageId)
@@ -79,7 +79,7 @@ class CatEntityDomainModelListViewModelTest {
         val cats = listOf(catDomainModelFav)
         val expected = listOf(catDomainModelNoFav)
 
-        every { deleteFavouriteCatUseCase.deleteFavouriteCat(favId) } returns Completable.complete()
+        every { deleteFavouriteCatUseCase(favId) } returns Completable.complete()
         addCatsToLiveData(cats)
 
         viewModel.deleteFavouriteCat(favId)

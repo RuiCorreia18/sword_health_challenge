@@ -8,5 +8,5 @@ import javax.inject.Inject
 class GetCatDetailsUseCase @Inject constructor(
     private val repository: CatRepository
 ) {
-    fun getCatDetails(catId: String): Single<CatDetailsDomainModel> = repository.getCatDetails(catId)
+    operator fun invoke(catId: String): Single<CatDetailsDomainModel> = repository.getCatDetails(catId)
 }

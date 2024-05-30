@@ -72,7 +72,7 @@ class CatsListViewModel @Inject constructor(
     }
 
     fun favouriteCat(imageId: String) {
-        postFavouriteCatUseCase.postFavouriteCat(imageId)
+        postFavouriteCatUseCase(imageId)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(
@@ -93,7 +93,7 @@ class CatsListViewModel @Inject constructor(
     }
 
     fun deleteFavouriteCat(favouriteId: String) {
-        deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
+        deleteFavouriteCatUseCase(favouriteId)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(

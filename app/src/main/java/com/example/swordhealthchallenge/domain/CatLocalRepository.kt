@@ -11,4 +11,5 @@ interface CatLocalRepository {
     fun saveCats(catsList: List<CatResponse>): Completable
     fun setFavouriteCat(imageId: String, favouriteId: String): Completable
     fun deleteFavouriteCat(favouriteId: String): Completable
+    fun getFavouriteCats(): Single<List<CatEntity>>
 }

@@ -38,6 +38,9 @@ interface CatDao {
     @Query("UPDATE cats SET favouriteId = :favouriteId WHERE imageId = :imageId")
     fun setFavouriteCat(imageId: String, favouriteId: String)
 
-    @Query("UPDATE cats SET favouriteId = \"\" WHERE favouriteId = :favouriteId")
+    @Query("UPDATE cats SET favouriteId = '' WHERE favouriteId = :favouriteId")
     fun deleteFavouriteCat(favouriteId: String)
+
+    @Query("SELECT * FROM cats WHERE favouriteId != ''")
+    fun getFavouriteCats(): Single<List<CatEntity>>
 }

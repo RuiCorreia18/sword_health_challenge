@@ -8,6 +8,7 @@ import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatListUseCase
+import com.example.swordhealthchallenge.domain.usecases.GetFavouriteCatsUseCase
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -18,6 +19,7 @@ import javax.inject.Named
 
 class FavouritesViewModel @Inject constructor(
     private val getCatListUseCase: GetCatListUseCase,
+    private val getFavouriteCatsUseCase: GetFavouriteCatsUseCase,
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
     @Named("io") private val ioSchedulers: Scheduler,
     @Named("main") private val mainSchedulers: Scheduler,
@@ -34,7 +36,7 @@ class FavouritesViewModel @Inject constructor(
     private val compositeDisposable by lazy { CompositeDisposable() }
 
     fun getFavouriteCats() {
-        getCatListUseCase.getFavouriteCats()
+        getFavouriteCatsUseCase()
             .subscribeOn(ioSchedulers)
             .flattenAsObservable { infoList -> infoList }
             .flatMapSingle { info -> fetchCatByImageId(info) }
@@ -68,7 +70,7 @@ class FavouritesViewModel @Inject constructor(
             }
 
     fun deleteFavouriteCat(favouriteId: String) {
-        deleteFavouriteCatUseCase.deleteFavouriteCat(favouriteId)
+        deleteFavouriteCatUseCase(favouriteId)
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(

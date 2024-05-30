@@ -68,6 +68,8 @@ class LocalDataSource @Inject constructor(
             catDao.deleteFavouriteCat(favouriteId)
         }
     }
+
+    fun getFavouriteCats(): Single<List<CatEntity>> = catDao.getFavouriteCats()
 }
 
 

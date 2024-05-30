@@ -37,7 +37,7 @@ class DetailsViewModelTest {
     fun `when getCatDetails success should fill livedata`() {
         val expected = catDetailsDomainModelNoFav1
 
-        every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)
+        every { getCatDetailsUseCase("1") } returns Single.just(expected)
         viewModel.getCatDetails("1", "URL1", "")
 
         Assert.assertEquals(expected, viewModel.catDetails.value)
@@ -49,8 +49,8 @@ class DetailsViewModelTest {
         val imageId = "ImageId1"
         val expected = catDetailsDomainModelFav1
 
-        every { postFavouriteCatUseCase.postFavouriteCat(imageId) } returns Single.just(favId)
-        every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)
+        every { postFavouriteCatUseCase(imageId) } returns Single.just(favId)
+        every { getCatDetailsUseCase("1") } returns Single.just(expected)
         viewModel.getCatDetails("1", "URL1", favId)
 
         viewModel.favouriteCat(imageId)
@@ -64,8 +64,8 @@ class DetailsViewModelTest {
         val imageId = "ImageId1"
         val expected = catDetailsDomainModelNoFav1
 
-        every { deleteFavouriteCatUseCase.deleteFavouriteCat(imageId) } returns Completable.complete()
-        every { getCatDetailsUseCase.getCatDetails("1") } returns Single.just(expected)
+        every { deleteFavouriteCatUseCase(imageId) } returns Completable.complete()
+        every { getCatDetailsUseCase("1") } returns Single.just(expected)
         viewModel.getCatDetails("1", "URL1", favId)
 
         viewModel.deleteFavouriteCat(imageId)

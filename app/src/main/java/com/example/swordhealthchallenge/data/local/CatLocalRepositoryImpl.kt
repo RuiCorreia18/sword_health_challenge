@@ -25,4 +25,8 @@ class CatLocalRepositoryImpl @Inject constructor(
     override fun deleteFavouriteCat(favouriteId: String): Completable {
         return localDataSource.deleteFavouriteCat(favouriteId)
     }
+
+    override fun getFavouriteCats(): Single<List<CatEntity>> {
+        return localDataSource.getFavouriteCats()
+    }
 }
