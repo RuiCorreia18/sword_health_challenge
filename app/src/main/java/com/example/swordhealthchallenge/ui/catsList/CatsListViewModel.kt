@@ -42,10 +42,7 @@ class CatsListViewModel @Inject constructor(
             .subscribeOn(ioSchedulers)
             .observeOn(mainSchedulers)
             .subscribeBy(
-                onSuccess = { catList ->
-                    // TODO Added this in case i got time for pagination
-                    catsList.value?.let { _catsList.value = it.plus(catList) }
-                },
+                onSuccess = { _catsList.value = it },
                 onError = {
                     updateError("ERROR CAT API BREED", it, "Problem getting cats list")
                 }

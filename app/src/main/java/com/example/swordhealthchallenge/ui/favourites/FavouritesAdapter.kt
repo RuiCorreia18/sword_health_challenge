@@ -3,6 +3,7 @@ package com.example.swordhealthchallenge.ui.favourites
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.R
@@ -31,8 +32,10 @@ class FavouritesAdapter(
     override fun getItemCount(): Int = favouritesList.size
 
     fun updateCatsList(cats: List<FavouriteCatDomainModel>) {
+        val callback = FavouriteCatDomainModelDiffUtilCallback(favouritesList, cats)
+        val result = DiffUtil.calculateDiff(callback)
         favouritesList = cats
-        notifyDataSetChanged()
+        result.dispatchUpdatesTo(this)
     }
 
 
@@ -72,5 +75,26 @@ class FavouritesAdapter(
                 onCardClick.invoke(cat.id, cat.imageUrl, cat.favouriteId)
             }
         }
+    }
+}
+
+class FavouriteCatDomainModelDiffUtilCallback(
+    private val oldList: List<FavouriteCatDomainModel>,
+    private val newList: List<FavouriteCatDomainModel>
+) : DiffUtil.Callback() {
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 }

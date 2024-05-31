@@ -1,13 +1,14 @@
 package com.example.swordhealthchallenge.ui.favourites
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.swordhealthchallenge.NetworkUtils
 import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetFavouriteCatsUseCase
-import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favCat1
-import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favCat2
-import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favInfo1
-import com.example.swordhealthchallenge.ui.utils.FavouritesDomainModelFakes.favInfo2
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favCat1
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favCat2
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favInfo1
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favInfo2
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
@@ -15,6 +16,7 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,6 +24,7 @@ class FavouritesViewModelTest {
 
     private val getFavouriteCatsUseCase: GetFavouriteCatsUseCase = mockk()
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase = mockk()
+    private val networkUtils: NetworkUtils = mockk()
     private val ioSchedulers: Scheduler = Schedulers.trampoline()
     private val mainSchedulers: Scheduler = Schedulers.trampoline()
 
@@ -29,12 +32,18 @@ class FavouritesViewModelTest {
         getFavouriteCatsUseCase,
         deleteFavouriteCatUseCase,
         ioSchedulers,
-        mainSchedulers
+        mainSchedulers,
+        networkUtils
     )
 
     @JvmField
     @Rule
     val instantExecutorRule = InstantTaskExecutorRule()
+
+    @Before
+    fun setup() {
+        every { networkUtils.isInternetAvailable() } returns true
+    }
 
     @Test
     fun `when getFavouriteCats success should fill livedata`() {

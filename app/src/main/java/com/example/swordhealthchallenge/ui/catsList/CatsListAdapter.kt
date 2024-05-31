@@ -3,6 +3,7 @@ package com.example.swordhealthchallenge.ui.catsList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.swordhealthchallenge.databinding.CatListItemBinding
@@ -32,9 +33,12 @@ class CatsListAdapter(
 
     override fun getItemCount(): Int = catsList.size
 
+
     fun updateCatsList(catDomainModels: List<CatDomainModel>) {
+        val callback = CatDomainModelDiffUtilCallback(catsList, catDomainModels)
+        val result = DiffUtil.calculateDiff(callback)
         catsList = catDomainModels
-        notifyDataSetChanged()
+        result.dispatchUpdatesTo(this)
     }
 
     inner class CatsListViewHolder(
@@ -79,5 +83,26 @@ class CatsListAdapter(
                 )
             }
         }
+    }
+}
+
+class CatDomainModelDiffUtilCallback(
+    private val oldList: List<CatDomainModel>,
+    private val newList: List<CatDomainModel>
+) : DiffUtil.Callback() {
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 }

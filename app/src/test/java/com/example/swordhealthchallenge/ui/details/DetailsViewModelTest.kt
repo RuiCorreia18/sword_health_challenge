@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.GetCatDetailsUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
-import com.example.swordhealthchallenge.ui.utils.CatDetailsDomainModelFakes.catDetailsDomainModelFav1
-import com.example.swordhealthchallenge.ui.utils.CatDetailsDomainModelFakes.catDetailsDomainModelNoFav1
+import com.example.swordhealthchallenge.utils.CatDetailsDomainModelFakes.catDetailsDomainModelFav1
+import com.example.swordhealthchallenge.utils.CatDetailsDomainModelFakes.catDetailsDomainModelNoFav1
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable

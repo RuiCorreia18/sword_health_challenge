@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.swordhealthchallenge.NetworkUtils
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel.Companion.emptyFavouriteCatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
@@ -22,6 +23,7 @@ class FavouritesViewModel @Inject constructor(
     private val deleteFavouriteCatUseCase: DeleteFavouriteCatUseCase,
     @Named("io") private val ioSchedulers: Scheduler,
     @Named("main") private val mainSchedulers: Scheduler,
+    private val networkUtils: NetworkUtils,
 ) : ViewModel() {
 
     private val _favouriteCatsList = MutableLiveData<List<FavouriteCatDomainModel>>(emptyList())
@@ -35,6 +37,14 @@ class FavouritesViewModel @Inject constructor(
     private val compositeDisposable by lazy { CompositeDisposable() }
 
     fun getFavouriteCats() {
+        if (networkUtils.isInternetAvailable()) {
+            getFavouriteCatsFromApi()
+        } else {
+            getFavouriteCatsOffline()
+        }
+    }
+
+    private fun getFavouriteCatsFromApi() {
         getFavouriteCatsUseCase()
             .subscribeOn(ioSchedulers)
             .flattenAsObservable { infoList -> infoList }
@@ -51,6 +61,25 @@ class FavouritesViewModel @Inject constructor(
                         "ERROR CAT API FAV",
                         it,
                         "Problem getting favourite cat list"
+                    )
+                }
+            )
+            .addTo(compositeDisposable)
+    }
+
+    private fun getFavouriteCatsOffline() {
+        getFavouriteCatsUseCase.getFavouriteCatsOffline()
+            .subscribeOn(ioSchedulers)
+            .observeOn(mainSchedulers)
+            .subscribeBy(
+                onSuccess = { favouriteCats ->
+                    _favouriteCatsList.value = favouriteCats.sortedBy { it.breed }
+                },
+                onError = {
+                    updateError(
+                        "ERROR DELETE FAVOURITE CAT",
+                        it,
+                        "Problem deleting favourite cat"
                     )
                 }
             )

@@ -1,5 +1,6 @@
 package com.example.swordhealthchallenge.domain.usecases
 
+import com.example.swordhealthchallenge.data.toFavouriteCatDomainModelList
 import com.example.swordhealthchallenge.domain.CatLocalRepository
 import com.example.swordhealthchallenge.domain.CatRepository
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
@@ -10,7 +11,7 @@ import javax.inject.Inject
 
 class GetFavouriteCatsUseCase @Inject constructor(
     private val repository: CatRepository,
-    private val localRepository: CatLocalRepository
+    private val localRepository: CatLocalRepository,
 ) {
 
     operator fun invoke(): Single<List<FavouriteInfoDomainModel>> {
@@ -34,4 +35,9 @@ class GetFavouriteCatsUseCase @Inject constructor(
 
     fun getCatByImageId(imageId: String): Single<FavouriteCatDomainModel> =
         repository.getCatByImageId(imageId)
+
+    fun getFavouriteCatsOffline(): Single<List<FavouriteCatDomainModel>> {
+        return localRepository.getFavouriteCats()
+            .flatMap { Single.just(it.toFavouriteCatDomainModelList()) }
+    }
 }

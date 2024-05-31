@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.ui.utils
+package com.example.swordhealthchallenge.utils
 
 import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
 import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
@@ -17,6 +17,7 @@ object FavouritesDomainModelFakes {
         favouriteId = "FavId1",
         imageId = "ImageId1"
     )
+
 
     val favCat2 = FavouriteCatDomainModel(
         id = "2",

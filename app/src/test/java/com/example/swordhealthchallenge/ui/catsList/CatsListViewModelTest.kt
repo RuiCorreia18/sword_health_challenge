@@ -6,8 +6,8 @@ import com.example.swordhealthchallenge.domain.usecases.DeleteFavouriteCatUseCas
 import com.example.swordhealthchallenge.domain.usecases.GetCatsListUseCase
 import com.example.swordhealthchallenge.domain.usecases.PostFavouriteCatUseCase
 import com.example.swordhealthchallenge.domain.usecases.SearchCatsUseCase
-import com.example.swordhealthchallenge.ui.utils.CatDomainModelFakes.catDomainModelFav
-import com.example.swordhealthchallenge.ui.utils.CatDomainModelFakes.catDomainModelNoFav
+import com.example.swordhealthchallenge.utils.CatDomainModelFakes.catDomainModelFav
+import com.example.swordhealthchallenge.utils.CatDomainModelFakes.catDomainModelNoFav
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable

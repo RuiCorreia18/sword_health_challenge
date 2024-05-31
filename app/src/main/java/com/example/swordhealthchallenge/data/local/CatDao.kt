@@ -22,7 +22,8 @@ interface CatDao {
                 " imageId = :imageId," +
                 " origin = :origin," +
                 " temperament = :temperament," +
-                " description = :description" +
+                " description = :description," +
+                " lifeSpan = :lifeSpan" +
                 " WHERE id = :id"
     )
     fun updateCatInfo(
@@ -33,6 +34,7 @@ interface CatDao {
         origin: String,
         temperament: String,
         description: String,
+        lifeSpan: String
     )
 
     @Query("UPDATE cats SET favouriteId = :favouriteId WHERE imageId = :imageId")

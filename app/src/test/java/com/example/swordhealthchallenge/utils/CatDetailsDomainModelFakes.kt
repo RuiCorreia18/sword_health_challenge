@@ -1,4 +1,4 @@
-package com.example.swordhealthchallenge.ui.utils
+package com.example.swordhealthchallenge.utils
 
 import com.example.swordhealthchallenge.domain.model.CatDetailsDomainModel
 
@@ -22,5 +22,16 @@ object CatDetailsDomainModelFakes {
         origin = "Origin1",
         temperament = "Temperament1",
         description = "Description1",
+    )
+
+    val catDetailsDomainModelMock = CatDetailsDomainModel(
+        id = "1",
+        breed = "Breed1",
+        imageUrl = "URL1",
+        imageId = "ImageId1",
+        favouriteId = "FavId1",
+        origin = "Origin",
+        temperament = "Temperament",
+        description = "Descrition",
     )
 }

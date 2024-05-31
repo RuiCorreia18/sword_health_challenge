@@ -61,5 +61,31 @@ fun CatResponse.toEntity(): CatEntity {
         origin = this.origin,
         temperament = this.temperament,
         description = this.description,
+        lifeSpan = this.life_span.split(" ").first()
     )
+}
+
+fun List<CatEntity>.toCatDomainModelList(): List<CatDomainModel> {
+    return this.map {
+        CatDomainModel(
+            id = it.id,
+            breed = it.breed,
+            imageUrl = it.imageUrl,
+            imageId = it.imageId,
+            favouriteId = it.favouriteId
+        )
+    }
+}
+
+fun List<CatEntity>.toFavouriteCatDomainModelList(): List<FavouriteCatDomainModel> {
+    return this.map {
+        FavouriteCatDomainModel(
+            id = it.id,
+            breed = it.breed,
+            imageUrl = it.imageUrl,
+            imageId = it.imageId,
+            lifeSpan = it.lifeSpan,
+            favouriteId = it.favouriteId
+        )
+    }
 }

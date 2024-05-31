@@ -15,6 +15,8 @@ data class CatResponse(
     val origin: String,
     @SerializedName("description")
     val description: String,
+    @SerializedName("life_span")
+    val life_span: String,
 )
 
 data class CatImageResponse(

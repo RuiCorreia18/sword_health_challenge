@@ -1,8 +1,9 @@
 package com.example.swordhealthchallenge.domain
 
-import com.example.swordhealthchallenge.domain.model.FavouriteCatDomainModel
-import com.example.swordhealthchallenge.domain.model.FavouriteInfoDomainModel
 import com.example.swordhealthchallenge.domain.usecases.GetFavouriteCatsUseCase
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favCat1
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favInfo1
+import com.example.swordhealthchallenge.utils.FavouritesDomainModelFakes.favInfo2
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
@@ -17,16 +18,7 @@ class GetFavouriteCatsUseCaseTest {
 
     @Test
     fun `when getFavouriteCats is success should return list of FavouriteInfo`() {
-        val catFavInfoListMock = listOf(
-            FavouriteInfoDomainModel(
-                imageId = "ImageId1",
-                favouriteId = "FavId1",
-            ),
-            FavouriteInfoDomainModel(
-                imageId = "ImageId2",
-                favouriteId = "FavId2",
-            ),
-        )
+        val catFavInfoListMock = listOf(favInfo1, favInfo2)
 
         every { repository.getFavouriteCats() } returns Single.just(catFavInfoListMock)
         every { localRepository.setFavouriteCat(any(), any()) } returns Completable.complete()
@@ -40,20 +32,10 @@ class GetFavouriteCatsUseCaseTest {
     fun `when getCatByImageId is success should return list of FavouriteCat`() {
         val imageId = "ImageId1"
 
-        val favCatMock = FavouriteCatDomainModel(
-            id = "CatId1",
-            breed = "Breed1",
-            imageUrl = "URL1",
-            imageId = "ImageId1",
-            favouriteId = "FavId1",
-            lifeSpan = "LifeSpan",
-        )
-
-
-        every { repository.getCatByImageId(imageId) } returns Single.just(favCatMock)
+        every { repository.getCatByImageId(imageId) } returns Single.just(favCat1)
 
         useCase.getCatByImageId(imageId)
             .test()
-            .assertResult(favCatMock)
+            .assertResult(favCat1)
     }
 }

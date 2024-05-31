@@ -53,7 +53,8 @@ class LocalDataSource @Inject constructor(
             imageId = cat.imageId,
             origin = cat.origin,
             temperament = cat.temperament,
-            description = cat.description
+            description = cat.description,
+            lifeSpan = cat.lifeSpan
         )
     }
 

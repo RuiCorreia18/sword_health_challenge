@@ -55,6 +55,7 @@ class CatRepositoryImplTest {
                 temperament = "Temperament1",
                 origin = "Origin1",
                 description = "Description1",
+                life_span = "LifeSpan1"
             ),
             CatResponse(
                 id = "CatId2",
@@ -66,6 +67,7 @@ class CatRepositoryImplTest {
                 temperament = "Temperament2",
                 origin = "Origin2",
                 description = "Description2",
+                life_span = "LifeSpan1"
             ),
         )
 
@@ -105,6 +107,7 @@ class CatRepositoryImplTest {
                 temperament = "Temperament1",
                 origin = "Origin1",
                 description = "Description1",
+                life_span = "LifeSpan1",
             ),
             CatResponse(
                 id = "CatId2",
@@ -116,6 +119,7 @@ class CatRepositoryImplTest {
                 temperament = "Temperament2",
                 origin = "Origin2",
                 description = "Description2",
+                life_span = "LifeSpan1",
             ),
         )
 

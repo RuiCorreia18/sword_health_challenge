@@ -1,7 +1,7 @@
 package com.example.swordhealthchallenge.domain
 
-import com.example.swordhealthchallenge.domain.model.CatDomainModel
 import com.example.swordhealthchallenge.domain.usecases.SearchCatsUseCase
+import com.example.swordhealthchallenge.utils.CatDomainModelFakes.catDomainModelNoFav
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Single
@@ -15,22 +15,7 @@ class SearchCatsUseCaseTest {
     @Test
     fun `when searchCat is success should return list of Cat`() {
         val searchText = "breed"
-        val catDomainModelListMocks = listOf(
-            CatDomainModel(
-                id = "CatId1",
-                breed = "Breed1",
-                imageUrl = "URL1",
-                imageId = "ImageId1",
-                favouriteId = ""
-            ),
-            CatDomainModel(
-                id = "CatId2",
-                breed = "Breed2",
-                imageUrl = "URL2",
-                imageId = "ImageId2",
-                favouriteId = ""
-            ),
-        )
+        val catDomainModelListMocks = listOf(catDomainModelNoFav)
 
         every { repository.searchCat(searchText) } returns Single.just(catDomainModelListMocks)
 

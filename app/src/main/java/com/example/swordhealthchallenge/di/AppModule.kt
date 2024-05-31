@@ -3,6 +3,7 @@ package com.example.swordhealthchallenge.di
 import android.app.Application
 import androidx.room.Room
 import com.example.swordhealthchallenge.BuildConfig
+import com.example.swordhealthchallenge.NetworkUtils
 import com.example.swordhealthchallenge.data.local.AppDatabase
 import com.example.swordhealthchallenge.data.local.CatDao
 import com.example.swordhealthchallenge.data.local.CatLocalRepositoryImpl
@@ -75,6 +76,9 @@ class AppModule {
     fun provideCatDao(appDatabase: AppDatabase): CatDao {
         return appDatabase.catDao()
     }
+
+    @Provides
+    fun provideNetworkUtils(context: Application): NetworkUtils = NetworkUtils(context)
 }
 
 @Module
