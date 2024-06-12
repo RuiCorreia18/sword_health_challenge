@@ -32,10 +32,8 @@ class FavouritesAdapter(
     override fun getItemCount(): Int = favouritesList.size
 
     fun updateCatsList(cats: List<FavouriteCatDomainModel>) {
-        val callback = FavouriteCatDomainModelDiffUtilCallback(favouritesList, cats)
-        val result = DiffUtil.calculateDiff(callback)
         favouritesList = cats
-        result.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
 

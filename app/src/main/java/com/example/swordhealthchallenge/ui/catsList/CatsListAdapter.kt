@@ -35,10 +35,8 @@ class CatsListAdapter(
 
 
     fun updateCatsList(catDomainModels: List<CatDomainModel>) {
-        val callback = CatDomainModelDiffUtilCallback(catsList, catDomainModels)
-        val result = DiffUtil.calculateDiff(callback)
         catsList = catDomainModels
-        result.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     inner class CatsListViewHolder(
@@ -99,7 +97,7 @@ class CatDomainModelDiffUtilCallback(
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        return oldList[oldItemPosition].favouriteId == newList[newItemPosition].favouriteId
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
